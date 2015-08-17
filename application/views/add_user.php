@@ -1,7 +1,7 @@
 <!--
     Created on - 2015-08-02
     Purpose - HTML Form to add Agent/Corporate/Walkin
-    Author :- Sunita Mistry
+    Author :- Sunita Mistry12
     Filename : add_user.php
  -->   
 
@@ -13,7 +13,7 @@
 
 </style>
             
-            <div class="panel-body">
+            <div class="panel-body ">
                 <form action = "" id = "addUserForm" name = "addUserForm" method="post" class="form-horizontal">
 
                 <div class = "row" style = "margin-bottom:10px">

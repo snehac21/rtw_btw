@@ -137,61 +137,70 @@ input.error, select.error{
                     <!-- Visa Form -->
                     <div id = "visa" class = "product" style= "border:1px solid;padding:20px;border-color:#ccc;margin-bottom:10px;">
 
-                     <div class="form-group"><label class="col-sm-2 control-label">Product Type</label>
-                    <div class="col-sm-10">
-                        <?php 
-                        $options = array('' => 'Select Product Type','Tourist'=> 'Tourist','Business'=> 'Business','Work'=> 'Work','StudentBusiness' => 'StudentBusiness',);
-                        echo form_dropdown('visa_product_type', $options, '','class ="form-control m-b" ');
-                        ?>
-                    </div>
-                    </div> 
-
                      <div class="form-group"><label class="col-sm-2 control-label">Country</label>
                     <div class="col-sm-10">
                         <?php 
-                        echo form_dropdown('visa_country', $country_master, '','class ="form-control m-b" onchange = "countrywiseVal(this.value);"');
+                        $country_opt = array('' => 'Select Country' ) + $country_master;
+                        echo form_dropdown('visa_country', $country_opt, '','class ="form-control m-b" onchange = "countrywiseVal(this.value);"');
                         ?>
                     </div>
                     </div> 
 
                     <div class="form-group"><label class="col-sm-2 control-label">Visa Type</label>
                     <div class="col-sm-10" id = "visa_type_div">
+                        <div id = "div1">
                         <?php 
                         $options = array('' => 'Select Visa Type');
                         echo form_dropdown('visa_type', $options, '','class ="form-control m-b" onchange = "visaVal(this.value);"');
                         ?>
+                        </div>
+
+                        <div id = "div2" style = "display:none;">
+                            <div class="col-md-5 forum-info animated-panel zoomIn" id = "visa_submitted" style="animation-delay: 1s;">
+                                <small>The visa shall be submitted</small>
+                            </div>
+
+                            <div class="col-md-5 forum-info animated-panel zoomIn" id = "max_process_days" style="animation-delay: 1s;">
+                                <small>Maximum Days to process</small>
+                            </div>
+
+                            <div class="col-md-5 forum-info animated-panel zoomIn" id = "validity" style="animation-delay: 1s;">
+                                <small>The validity is for</small>
+                            </div>
+                        </div>
                     </div>
+                    
                     </div> 
 
                     <div class="form-group"><label class="col-sm-2 control-label">Travelling From</label>
                     <div class="col-sm-10" id = "visa_city_div">
                         <?php 
-                        $options = array(''=>'Travelling From');
-                        echo form_dropdown('visa_travel_from', $options, '','class ="form-control m-b" ');
+                        $travel_from_master = array(''=>'Select Travelling From') + $country_master;
+                        echo form_dropdown('visa_travel_from', $travel_from_master, '','class ="form-control m-b" ');
                         ?>
                     </div>
                     </div> 
 
                     <div class="form-group"><label class="col-sm-2 control-label">Acceptance Date</label>
                         <div class="col-sm-10">
-                            <input id="datapicker2" type="text" value="" name = "acceptance_date" class="form-control m-b" placeholder = 'Select Acceptance Date' />
+                            <input id="acceptance_date" type="text" value="" name = "acceptance_date" class="form-control m-b datepicker2" placeholder = 'Select Acceptance Date' />
                         </div>
                     </div>
                     
 
                     <div class="form-group"><label class="col-sm-2 control-label">Travel Date</label>
                     <div class="col-sm-6">
-                        <input id="datapicker2" type="text" value="" name = "visa_travel_date" class="form-control" placeholder = 'Select Travel Date' />
+                        <input id="visa_travel_date" type="text" value="" name = "visa_travel_date" class="datepicker2 form-control" placeholder = 'Select Travel Date' />
                     </div>
                     <div class="col-sm-4">
                         <div class="radio radio-success radio-inline">
-                            <?php $data = array('name'=> 'visa_travel_data_type','id' => 'travel_data_type','value'=> 'Tentative','class' => 'form-control');
+                            <?php $data = array('name'=> 'visa_travel_date_type','id' => 'tentative_date','value'=> 'Tentative','class' => 'form-control');
                         echo form_radio($data); ?>
                                     <label for="inlineRadio1"> Tentative </label>
                                 </div>
 
                                 <div class="radio radio-success radio-inline">
-                            <?php $data = array('name'=> 'visa_travel_data_type','id' => 'travel_data_type','value'=> 'Confirm','class' => 'form-control');
+                            <?php $data = array('name'=> 'visa_travel_date_type','id' => 'confirm_date','value'=> 'Confirm','class' => 'form-control');
                         echo form_radio($data); ?>
                                     <label for="inlineRadio1"> Confirm </label>
                                 </div>
@@ -223,12 +232,13 @@ input.error, select.error{
                                     <tbody>
                                         <tr id="zone-to-geo-zone-row0 col-lg-">  
                                             <td class="text-left" >
-                                                <select name="zone_to_geo_zone[0][pp_state]" id="pp_state0" class="form-control pp_state" >
-                                                    <option value="0">Select PP Issue State</option>
-                                                </select>
+                                                <?php 
+                                                $issue_opt = array('' => 'Select PP Issue State' ) + $pp_issue_state_master;
+                                            echo form_dropdown('passport[0][pp_state]', $issue_opt, '','class ="form-control pp_state", id = "pp_state0" ');
+                                                ?>
                                             </td>  
                                             <td class="text-left" >
-                                                <input id="pp_expiry0" type="text" value="" name = "zone_to_geo_zone[0][pp_expiry]" class="form-control datepicker2 pp_expiry" placeholder = 'PP Expiry Date' />
+                                                <input id="pp_expiry0" type="text" value="" name = "passport[0][pp_expiry]" class="datepicker2 form-control pp_expiry" placeholder = 'PP Expiry Date' />
                                             </td>  
                                             <td class="text-left" style = "width:10%">
                                                 <button type="button" onclick="$('#zone-to-geo-zone-row0').remove();" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-minus-circle"></i>
@@ -239,7 +249,7 @@ input.error, select.error{
                                     <tfoot>
                                       <tr>
                                         <td colspan="2"></td>
-                                        <td class="text-left"><button type="button" onclick="addGeoZone();" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Add Geo Zone"><i class="fa fa-plus-circle"></i></button></td>
+                                        <td class="text-left"><button type="button" onclick="addPassport();" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Add Passport Info"><i class="fa fa-plus-circle"></i></button></td>
                                       </tr>
                                     </tfoot>
                                   </table>
@@ -254,15 +264,15 @@ input.error, select.error{
                             <thead>
                             <tr>
                                 <th><div class="radio radio-info radio-inline">
-                                    <input type="radio" value="Btw Provided" name="co_related_services" checked="">
+                                    <input type="radio" value="Btw Provided" name="provided_by" >
                                     <label for="inlineRadio1"> BTW Provided </label>
                                 </div></th>
                                 <th><div class="radio radio-info radio-inline">
-                                    <input type="radio" value="Client Provided" name="co_related_services" checked="">
+                                    <input type="radio" value="Client Provided" name="provided_by" >
                                     <label for="inlineRadio1"> Client Provided </label>
                                 </div></th>
                                 <th><div class="radio radio-info radio-inline">
-                                    <input type="radio" value="Process Dummy" name="co_related_services" checked="">
+                                    <input type="radio" value="Process Dummy" name="provided_by" >
                                     <label for="inlineRadio1"> Process Dummy </label>
                                 </div></th>
                             </tr>
@@ -270,43 +280,43 @@ input.error, select.error{
                             <tbody>
                             <tr>
                                 <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="OKTB" name="co_related_services_oktb" checked="">
+                                    <input type="checkbox" value="OKTB" id = "co_related_services_oktb" name="co_related_services_oktb">
                                     <label for="inlinecheckbox1"> OKTB </label>
                                 </div></td>
                                 <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="FOREX" name="co_related_services_forex" checked="">
+                                    <input type="checkbox" value="FOREX" name="co_related_services_forex" >
                                     <label for="inlinecheckbox1"> FOREX </label>
                                 </div></td>
                                 <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="HOTEL" name="co_related_services_hotel" checked="">
+                                    <input type="checkbox" value="HOTEL" name="co_related_services_hotel" >
                                     <label for="inlinecheckbox1"> HOTEL </label>
                                 </div></td>
                             </tr>
                             <tr>
                                 <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="URGENT" name="co_related_services_oktb" checked="">
+                                    <input type="checkbox" value="URGENT" name="co_related_services_urgent" >
                                     <label for="inlinecheckbox1"> URGENT </label>
                                 </div></td>
                                 <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="INSURANCE" name="co_related_services_forex" checked="">
+                                    <input type="checkbox" value="INSURANCE" name="co_related_services_insurance" >
                                     <label for="inlinecheckbox1"> INSURANCE </label>
                                 </div></td>
                                 <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="PACKAGES" name="co_related_services_hotel" checked="">
+                                    <input type="checkbox" value="PACKAGES" name="co_related_services_packages" >
                                     <label for="inlinecheckbox1"> PACKAGES </label>
                                 </div></td>
                             </tr>
                             <tr>
                                 <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="AIR TICKETS" name="co_related_services_air" checked="">
+                                    <input type="checkbox" value="AIR TICKETS" name="co_related_services_air" >
                                     <label for="inlinecheckbox1"> AIR TICKETS </label>
                                 </div></td>
                                 <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="PASSPORT" name="co_related_services_passport" checked="">
+                                    <input type="checkbox" value="PASSPORT" name="co_related_services_passport" >
                                     <label for="inlinecheckbox1"> PASSPORT </label>
                                 </div></td>
                                 <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="TOURS" name="co_related_services_tours" checked="">
+                                    <input type="checkbox" value="TOURS" name="co_related_services_tours" >
                                     <label for="inlinecheckbox1"> TOURS </label>
                                 </div></td>
                             </tr>
@@ -322,15 +332,17 @@ input.error, select.error{
                          <div class="panel-body" style = "height: 150px;overflow: scroll;">
                             <div class="form-group">
                                             <div class="col-sm-6">
-                                            <select name="adult_designation" class="form-control m-b valid" ,="" id="adult_designation" aria-required="true" aria-invalid="false">
-                                                <option value=0>Select Visa Adult Designation</option>
-                                            </select>
+                                              <?php 
+                                            $design = array('' => 'Select Visa Adult Designation') + $designation_master;
+                                            echo form_dropdown('adult_designation', $design, '','class ="form-control m-b" ');
+                                            ?>
                                         </div>
 
-                                            <div class="col-sm-6">
-                                        <select name="invitee_designation" class="form-control m-b" ,="" id="invitee_designation">
-                                                <option value=0>Select Invitee Designation</option>
-                                        </select>
+                                        <div class="col-sm-6">
+                                            <?php 
+                                            $design = array('' => 'Select Invitee Designation') + $designation_master;
+                                            echo form_dropdown('invitee_designation', $design, '','class ="form-control m-b" ');
+                                            ?>
                                             </div>
                                         </div>
                             <div class = "col-sm-6">
@@ -912,6 +924,9 @@ $(document).ready(function(){
                 visa_travel_data_type: {
                     required: true,
                 },
+                acceptance_date: {
+                    required:true,
+                },
                 visa_adult:{
                     required:true
                 },
@@ -939,6 +954,9 @@ $(document).ready(function(){
                 transit_visa:{
                     required:true
                 },
+                provided_by:{
+                    required:true,
+                }
             },
             submitHandler: function() {
                // alert("submitted!");
@@ -955,6 +973,14 @@ $(document).ready(function(){
                });
             }
         });
+
+$.validator.addClassRules("pp_state", {
+     required: true,
+});
+
+$.validator.addClassRules("pp_expiry", {
+     required: true,
+});
 
 });
 
@@ -1060,7 +1086,7 @@ function countrywiseVal(country_id){
                         }else{
                                 if(data.visa != 'undefined')
                                 {
-                                    $("#visa_type_div").html(data.visa);
+                                    $("#div1").html(data.visa);
                                 }
                                 if(data.city != 'undefined')
                                 {
@@ -1069,9 +1095,9 @@ function countrywiseVal(country_id){
                                 if(data.oktb_required != 'undefined')
                                 {
                                     if(data.oktb_required == 'Yes') 
-                                        $("#visa_oktb").prop('checked',true);
+                                        $("#co_related_services_oktb").prop('checked',true);
                                     else
-                                        $("#visa_oktb").prop('checked',false);
+                                        $("#co_related_services_oktb").prop('checked',false);
                                 }
                             }          
                   }
@@ -1090,6 +1116,8 @@ function visaVal(visa_id){
                         alert("Details not found!!");
                         }else{
                             $("#visa_cost_table").css("display","block");
+                            $("#div2").css("display","block");
+
                                 if(data.visa_cost != 'undefined')
                                 {
                                     $("#visa_charge").val(data.visa_cost);
@@ -1102,23 +1130,49 @@ function visaVal(visa_id){
                                 {
                                     $("#visa_docs").html(data.document_required);
                                 }else $("#visa_docs").html('');
-                                
+
+                                if(data.processing_type != 'undefined')
+                                {
+                                    $("#visa_submitted").css('display','block');
+                                    $("#visa_submitted").html('<small>The visa shall be submitted <strong>'+ data.processing_type +'</strong></small>');
+                                }else{
+                                    $("#visa_submitted").css('display','none');
+                                }
+
+                                if(data.processing_days != 'undefined')
+                                {
+                                    $("#max_process_days").css('display','block');
+                                    $("#max_process_days").html('<small>Maximum Days to process <strong>' + data.processing_days + '</strong> days</small>');
+                                }else{
+                                    $("#max_process_days").css('display','none');
+                                }
+
+                                if(data.visa_validity_days != 'undefined')
+                                {
+                                    $("#validity").css('display','block');
+                                    $("#validity").html('<small>The validity is for <strong>'+ data.visa_validity_days +'</strong> days</small>');
+                                }else{
+                                    $("#validity").css('display','none');
+                                }
+
                             }          
                   }
               });
 }
+
+
 </script>
 
       <script type="text/javascript"><!--
-var zone_to_geo_zone_row = 0;
+var passport_row = 0;
 
-function addGeoZone() {
-    zone_to_geo_zone_row++;
+function addPassport() {
+    passport_row++;
 
-    html  = '<tr id="zone-to-geo-zone-row' + zone_to_geo_zone_row + '">';
-    html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][pp_state]" id="pp_state' + zone_to_geo_zone_row + '" class="form-control pp_state"><option value = "0">Select PP Issue State</option></select></td>';
-    html += '  <td class="text-left"><input id="pp_expiry' + zone_to_geo_zone_row + '" type="text" value="" name="zone_to_geo_zone['+ zone_to_geo_zone_row +'][pp_expiry]" class="form-control datepicker2 pp_expiry" placeholder="PP Expiry Date"></td>';
-    html += '  <td class="text-left"><button type="button" onclick="$(\'#zone-to-geo-zone-row' + zone_to_geo_zone_row + '\').remove();" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+    html  = '<tr id="zone-to-geo-zone-row' + passport_row + '">';
+    html += '  <td class="text-left"><select name="passport[' + passport_row + '][pp_state]" id="pp_state' + passport_row + '" class="form-control pp_state"><option value = "">Select PP Issue State</option></select></td>';
+    html += '  <td class="text-left"><input id="pp_expiry' + passport_row + '" type="text" value="" name="passport['+ passport_row +'][pp_expiry]" class="datepicker2 form-control pp_expiry" placeholder="PP Expiry Date"></td>';
+    html += '  <td class="text-left"><button type="button" onclick="$(\'#zone-to-geo-zone-row' + passport_row + '\').remove();" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
     html += '</tr>';
     
     $('#zone-to-geo-zone tbody').append(html);

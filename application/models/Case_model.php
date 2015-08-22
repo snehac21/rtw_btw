@@ -21,7 +21,7 @@ class Case_model extends CI_Model {
     	//$data = $this->db->query('Select GROUP_CONCAT("\'",username,"\'") as name From users Where status = 1 AND active = 1 AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
         //CONCAT(username,"\/",usercode,"\/",email,"\/",contact_no)
 
-        $data = $this->db->query('Select username as name, id From users Where status = 1 AND active = 1 AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
+        $data = $this->db->query('Select CONCAT(username,", ",usercode,", ",email,", ",contact_no) as name, id From users Where status = 1 AND active = 1 AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
 
     	if($data->num_rows() > 0){
             
@@ -81,7 +81,7 @@ class Case_model extends CI_Model {
     }
 
     public function get_dropdown_value($table,$field1,$field2,$condition = ''){
-        $value = array(''=>'Select');
+        //$value = array(''=>'Select');
         $sql = 'Select '.$field1.', '.$field2.' From '.$table.' Where status = "1"';
         $sql .= (strlen($condition) > 0) ? ' AND '.$condition : ''; 
         $data = $this->db->query($sql);
@@ -102,7 +102,7 @@ class Case_model extends CI_Model {
     }
 
     public function get_visa_value($visa_id){
-        $data = $this->db->query("Select visa_cost,service_charge,urgent_days,document_required From visa_type_master Where visa_type_id = ".$visa_id);
+        $data = $this->db->query("Select urgent_days,visa_validity_days,processing_days,processing_type,visa_cost,service_charge,urgent_days,document_required From visa_type_master Where visa_type_id = ".$visa_id);
         if($data->num_rows() > 0){
            return $data->first_row();
         }

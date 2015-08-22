@@ -11,36 +11,34 @@
 
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                        <small class="text-muted">Founder of App <b class="caret"></b></small>
+                        <small class="text-muted">My Account <b class="caret"></b></small>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="contacts.html">Contacts</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="analytics.html">Analytics</a></li>
+                        <li><a href="#">Profile</a></li>
                         <li class="divider"></li>
-                        <li><a href="login.html">Logout</a></li>
+                        <li><a href="#">Logout</a></li>
                     </ul>
                 </div>
 
 
-                <div id="sparkline1" class="small-chart m-t-sm"></div>
+                <!--<div id="sparkline1" class="small-chart m-t-sm"></div>
                 <div>
                     <h4 class="font-extra-bold m-b-xs">
                         $260 104,200
                     </h4>
                     <small class="text-muted">Your income from the last year in sales product X.</small>
-                </div>
+                </div>-->
             </div>
         </div>
 
         <ul class="nav" id="side-menu">
             <li class="active">
-                <a href="index-2.html"> <span class="nav-label">Dashboard</span> <span class="label label-success pull-right">v.1</span> </a>
+                <a href="#"> <span class="nav-label">Dashboard</span> </a>
             </li>
             <li>
                 <a href="analytics.html"> <span class="nav-label">Analytics</span><span class="label label-warning pull-right">NEW</span> </a>
             </li>
-            <li>
+            <!--<li>
                 <a href="#"><span class="nav-label">Interface</span><span class="fa arrow"></span> </a>
                 <ul class="nav nav-second-level">
                     <li><a href="panels.html">Panels design</a></li>
@@ -130,7 +128,7 @@
             </li>
             <li>
                 <a href="angular/index.html"> <span class="nav-label">AngularJS version</span></a>
-            </li>
+            </li>-->
         </ul>
     </div>
 </aside>

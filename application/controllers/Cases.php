@@ -44,6 +44,8 @@ class Cases extends CI_Controller {
 	public function caseForm()
 	{
 		$data['product_type_master'] = $this->Case_model->get_dropdown_value('product_type_master','pt_id','product_type');
+		$data['designation_master'] = $this->Case_model->get_dropdown_value('designation_master','design_id','designation');
+		$data['pp_issue_state_master'] = $this->Case_model->get_dropdown_value('pp_issue_state_master','issue_id','issue');
 		$data['country_master'] = $this->Case_model->get_dropdown_value('country_master','country_id','country');
 		$data['content'] = 'case_form';
 		$this->load->view('layout/content',$data);
@@ -145,7 +147,7 @@ class Cases extends CI_Controller {
 		if(isset($_POST['country_id'])){
 			
 			$data['visa_type_master'] = $this->Case_model->get_dropdown_value('visa_type_master','visa_type_id','visa_type','country_id = "' . $_POST['country_id'] . '"');
-			$html['visa'] = '<select name="visa_type" class="form-control m-b" onchange = "visaVal(this.value)">';
+			$html['visa'] = '<select name="visa_type" class="form-control m-b" onchange = "visaVal(this.value)"><option value = "">Select Visa Type</option>';
 				if(count($data['visa_type_master']) > 0){
 					foreach ($data['visa_type_master'] as $key => $value) {
 						$html['visa'] .= '<option value = "'.$key.'">'.$value.'</option>';
@@ -154,18 +156,8 @@ class Cases extends CI_Controller {
 					$html['visa'] .= '<option value = " ">Select</option>';
 				}
 			$html['visa'] .= "</select>";
-			
-			$data['city_master'] = $this->Case_model->get_dropdown_value('city_master','city_id','city','state_id = "' . $_POST['country_id'] . '"');
 
-			$html['city'] = '<select name="visa_city" class="form-control m-b">';
-				if(count($data['city_master']) > 0){
-					foreach ($data['city_master'] as $key => $value) {
-						$html['city'] .= '<option value = "'.$key.'">'.$value.'</option>';
-					}
-				}else{
-						$html['city'] .= '<option value = " ">Select</option>';
-					}
-			$html['city'] .= "</select>";
+
 
 			$html['oktb_required'] = $this->Case_model->get_oktb_status($_POST['country_id']);
 
@@ -181,7 +173,6 @@ class Cases extends CI_Controller {
 		if(isset($_POST['visa_id'])){
 			
 			$visa_info = $this->Case_model->get_visa_value($_POST['visa_id']);
-
 			echo json_encode($visa_info);
 			//print_r($visa_type_master); exit;
 		}else echo 0;

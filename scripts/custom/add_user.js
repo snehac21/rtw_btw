@@ -114,7 +114,7 @@ function countrywiseState(country_id){
                                 }
                                 if(data.city != 'undefined')
                                 {
-                                    $("#visa_city_div").html(data.city);
+                                    $("#stateDropdown").html(data.state);
                                 }
                                 if(data.oktb_required != 'undefined')
                                 {
@@ -122,6 +122,25 @@ function countrywiseState(country_id){
                                         $("#visa_oktb").prop('checked',true);
                                     else
                                         $("#visa_oktb").prop('checked',false);
+                                }
+                            }          
+                  }
+              });
+}
+function statewiseCity(state_id){
+    $.ajax({
+                  url: base_url + "index.php/cases/statewiseCity",
+                  dataType :'json',
+                  data : 'state_id='+state_id,
+                  type: 'POST',
+                  async: false,
+                  success:function(data) {
+                     if(data == 0){
+                        alert("Details not found!!");
+                        }else{
+                                if(data.city != 'undefined')
+                                {
+                                    $("#cityDropdown").html(data.city);
                                 }
                             }          
                   }

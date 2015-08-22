@@ -32,7 +32,7 @@ class Cases extends CI_Controller {
         parent::__construct();
         // Call the Model constructor
         $this->load->model('Case_model');
-        $this->load->helper('general');
+       // $this->load->helper('general');
     }
 
 	public function index()
@@ -165,6 +165,41 @@ class Cases extends CI_Controller {
 			//print_r($visa_type_master); exit;
 		}else echo 0;
 	}
+
+	/** to get state  dropdown countrywise **/
+	public function countrywiseState()
+	{
+		$html['state'] = '<option value="">Select State</option>';
+		if(isset($_POST['country_id']) and strlen($_POST['country_id']) > 0){
+		$states = $this->Case_model->get_dropdown_value('state_master','state_id','state_name','country_id = "' . $_POST['country_id'] . '"');
+		
+				if(count($states) > 0){
+					foreach ($states as $key => $value) {
+						$html['state'] .= '<option value = "'.$key.'">'.$value.'</option>';
+					}
+				}
+		}
+
+		echo json_encode($html);
+	}
+
+	/** to get city  dropdown statewise **/
+	public function statewiseCity()
+	{
+		$html['city'] = '<option value="">Select City</option>';
+		if(isset($_POST['state_id']) and strlen($_POST['state_id']) > 0){
+		$states = $this->Case_model->get_dropdown_value('city_master','city_id','city','state_id = "' . $_POST['state_id'] . '"');
+		
+				if(count($states) > 0){
+					foreach ($states as $key => $value) {
+						$html['city'] .= '<option value = "'.$key.'">'.$value.'</option>';
+					}
+				}
+		}
+
+		echo json_encode($html);
+	}
+
 
 	/** To get Visa values **/
 	public function visaInfoByVisaId()

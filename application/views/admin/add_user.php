@@ -26,13 +26,12 @@
     <div class="col-lg-12">
         <div class="hpanel">
             <div class="panel-body ">
-                <form action = "" id = "addUserForm" name = "addUserForm" method="post" class="form-horizontal">
+                <form action = "<?php echo base_url();?>index.php/admin/save_user" id = "addUserForm" name = "addUserForm" method="post" class="form-horizontal">
                 <div class="col-lg-6">
                     <div class="form-group"><label class="col-sm-4 control-label">Select User Type</label>
                         <div class="col-sm-8">
-                            <?php 
-                            $reg_user_group_arr = array('' => 'Select User Type','4'=> 'Agent','5'=> 'Corporate','6'=> 'Walkin');
-                            echo form_dropdown('user_type', $reg_user_group_arr, '','class ="form-control m-b" ');
+                            <?php $user_type_arr = array(''=>'Select') + $user_type_arr;
+                            echo form_dropdown('user_type', $user_type_arr, '','class ="form-control m-b" ');
                             ?>
                             <?php echo form_error('user_type', '<p class="text-danger">', '</p>');?>
                         </div>
@@ -98,27 +97,38 @@
                     <div class="form-group"><label class="col-sm-4 control-label">Country</label>
                     <div class="col-sm-8">
                         <?php 
-                        echo form_dropdown('user_country', $country_master, '','class ="form-control m-b" onchange = "countrywiseState(this.value)"');
+                        $country_master = array(''=>'Select Country') + $country_master;
+         ;               echo form_dropdown('user_country', $country_master, '','class ="form-control m-b" onchange = "countrywiseState(this.value)"');
                         ?>
                         <?php echo form_error('user_country', '<p class="text-danger">', '</p>');?>
                     </div>
                     </div> 
                     <div class="form-group"><label class="col-sm-4 control-label">State</label>
-                    <div class="col-sm-8" id = "stateDropdown">
+                    <div class="col-sm-8">
                         <?php 
-                        $state = array('' => 'Select State');
-                        echo form_dropdown('user_state', $state, '','class ="form-control m-b" onchange = "statewiseCity(this.value)"');
+                        $state = array('' => '--');
+                       // echo form_dropdown('user_state', $state, '');
                         ?>
+                        <select name="user_state" class ="form-control m-b" onchange = "statewiseCity(this.value)" id="stateDropdown">
+                        <?php foreach($state as $sk=>$sv) : ?>
+                            <option value="<?php echo $sk; ?>"><?php echo $sv;?></option>
+                        <?php endforeach; ?>
+                        </select>
                         <?php echo form_error('user_state', '<p class="text-danger">', '</p>');?>
                     </div>
                     </div>
 
                     <div class="form-group"><label class="col-sm-4 control-label">City</label>
-                    <div class="col-sm-8" id = "cityDropdown">
+                    <div class="col-sm-8">
                         <?php 
-                        $city = array('' => 'Select City');
-                        echo form_dropdown('user_city', $city, '','class ="form-control m-b" ');
+                        $city = array('' => '--');
+                        //echo form_dropdown('user_city', $city, '','class ="form-control m-b" ');
                         ?>
+                         <select  name="user_city" class ="form-control m-b" id="cityDropdown">
+                        <?php foreach($city as $sk=>$sv) : ?>
+                            <option value="<?php echo $sk; ?>"><?php echo $sv;?></option>
+                        <?php endforeach; ?>
+                        </select>
                         <?php echo form_error('user_city', '<p class="text-danger">', '</p>');?>
                     </div>
                     </div>

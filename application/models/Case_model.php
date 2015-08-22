@@ -81,7 +81,7 @@ class Case_model extends CI_Model {
     }
 
     public function get_dropdown_value($table,$field1,$field2,$condition = ''){
-        //$value = array(''=>'Select');
+        $value = array();
         $sql = 'Select '.$field1.', '.$field2.' From '.$table.' Where status = "1"';
         $sql .= (strlen($condition) > 0) ? ' AND '.$condition : ''; 
         $data = $this->db->query($sql);
@@ -90,6 +90,8 @@ class Case_model extends CI_Model {
                 $value[$r[$field1]] = $r[$field2];
             }
         }
+        //echo $this->db->last_query();
+
 
         return $value;
     }

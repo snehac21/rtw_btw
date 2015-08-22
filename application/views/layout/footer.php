@@ -30,7 +30,9 @@
 <script src="<?php echo base_url(); ?>scripts/homer.js"></script>
 <!--<script src="<?php echo base_url(); ?>scripts/charts.js"></script>-->
 <script src="<?php echo base_url(); ?>scripts/jquery.validate.min.js"></script>
-<script src="<?php echo base_url(); ?>scripts/common.js"></script>
+<script src="<?php echo base_url(); ?>scripts/custom/common.js"></script>
+<script src="<?php echo base_url(); ?>scripts/custom/form_validate.js"></script>
+
 
 
 <script>

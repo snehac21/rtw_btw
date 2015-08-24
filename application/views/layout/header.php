@@ -12,21 +12,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
 
     <!-- Vendor styles -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>vendor/fontawesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>vendor/metisMenu/dist/metisMenu.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>vendor/animate.css/animate.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>vendor/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>vendor/jquery-ui/themes/base/all.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/vendor/fontawesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/vendor/metisMenu/dist/metisMenu.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/vendor/animate.css/animate.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/vendor/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/vendor/jquery-ui/themes/base/all.css" />
 
     <!-- App styles -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>fonts/pe-icon-7-stroke/css/helper.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>styles/style.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>styles/custom.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/fonts/pe-icon-7-stroke/css/helper.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/styles/style.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>public/styles/custom.css">
 	
-	<script src="<?php echo base_url(); ?>vendor/jquery/dist/jquery.min.js"></script>
+	<script src="<?php echo base_url(); ?>public/vendor/jquery/dist/jquery.min.js"></script>
 
     <script>
         var base_url = '<?php echo base_url(); ?>';

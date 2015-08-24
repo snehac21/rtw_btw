@@ -31,8 +31,8 @@ class Cases extends CI_Controller {
     {
         parent::__construct();
         // Call the Model constructor
-        $this->load->model('Case_model');
-       // $this->load->helper('general');
+        $this->load->model('case_model');
+        $this->load->helper('global_helper');
     }
 
 	public function index()
@@ -43,10 +43,14 @@ class Cases extends CI_Controller {
 	/* Function to load Case Form */
 	public function caseForm()
 	{
-		$data['product_type_master'] = $this->Case_model->get_dropdown_value('product_type_master','pt_id','product_type');
-		$data['designation_master'] = $this->Case_model->get_dropdown_value('designation_master','design_id','designation');
-		$data['pp_issue_state_master'] = $this->Case_model->get_dropdown_value('pp_issue_state_master','issue_id','issue');
-		$data['country_master'] = $this->Case_model->get_dropdown_value('country_master','country_id','country');
+		$data['js'] = array('custom/inquiry_form.js', 'custom/add_user.js');
+		$data['css'][] = 'custom.css';
+		$data['product_type_master'] = get_dropdown_value('product_type_master','pt_id','product_type');
+		$data['designation_master'] = get_dropdown_value('designation_master','design_id','designation');
+		$data['pp_issue_state_master'] = get_dropdown_value('pp_issue_state_master','issue_id','issue');
+		$data['country_master'] = get_dropdown_value('country_master','country_id','country');
+		$data['user_type_arr'] = get_dropdown_value('user_groups','id','name','allowRegistration=1');
+		
 		$data['content'] = 'case_form';
 		$this->load->view('layout/content',$data);
 	}
@@ -65,14 +69,14 @@ class Cases extends CI_Controller {
 		
 		/** Check unique Username **/
 		if(strlen($this->input->post('user_name')) > 0 ){
-			$chk_uname = $this->Case_model->isUniqueUname($this->input->post('user_name'));
+			$chk_uname = $this->case_model->isUniqueUname($this->input->post('user_name'));
 			if($chk_uname == 1)
 			$error['err_uname'] = 'Username already exist';
 		}
 
 		/** Check unique User Email **/
 		if(strlen($this->input->post('user_email')) > 0){
-			$chk_email = $this->Case_model->isUniqueEmail($this->input->post('user_email'));
+			$chk_email = $this->case_model->isUniqueEmail($this->input->post('user_email'));
 			if($chk_email == 1)
 			$error['err_email'] = 'Email Id already exist';
 		}
@@ -81,14 +85,14 @@ class Cases extends CI_Controller {
 		if(count($error) == 0 ){
 
 			$user_type = $this->input->post('user_type');
-			$max = $this->Case_model->maxUserVal($user_type);
+			$max = $this->case_model->maxUserVal($user_type);
 			$max = ($max == 0) ? '001' : ((strlen($max) == 1) ? ('00'.($max+1)) : ('0'.($max+1)));
 			if($user_type == 4) $code = 'A'.$max ;
 			else if($user_type == 5) $code = 'C'. $max;
 			else $code = 'W'. $max;
 			$data = $this->input->post();
 			$data = array_merge(array("code"=>$code),$data);
-			$this->Case_model->saveUser($data);
+			$this->case_model->saveUser($data);
 			echo 1;
 		}else
 		echo json_encode($error);
@@ -100,7 +104,7 @@ class Cases extends CI_Controller {
 	public function getCustomer()
 	{
 		$json = array();
-		$results = $this->Case_model->getCustomers($_REQUEST['value']);
+		$results = $this->case_model->getCustomers($_REQUEST['value']);
 		if($results != 0){
 			foreach ($results as $result) {
 				$json[] = array(
@@ -118,7 +122,7 @@ class Cases extends CI_Controller {
 	{
 		$json = array();
 		if(isset($_POST['cust_id'])){
-			$results = $this->Case_model->getCustomerVal($_POST['cust_id']);
+			$results = $this->case_model->getCustomerVal($_POST['cust_id']);
 			if($results != 0){
 				foreach ($results as $result) {
 
@@ -146,7 +150,7 @@ class Cases extends CI_Controller {
 		$data = array();
 		if(isset($_POST['country_id'])){
 			
-			$data['visa_type_master'] = $this->Case_model->get_dropdown_value('visa_type_master','visa_type_id','visa_type','country_id = "' . $_POST['country_id'] . '"');
+			$data['visa_type_master'] = get_dropdown_value('visa_type_master','visa_type_id','visa_type','country_id = "' . $_POST['country_id'] . '"');
 			$html['visa'] = '<select name="visa_type" class="form-control m-b" onchange = "visaVal(this.value)"><option value = "">Select Visa Type</option>';
 				if(count($data['visa_type_master']) > 0){
 					foreach ($data['visa_type_master'] as $key => $value) {
@@ -159,7 +163,7 @@ class Cases extends CI_Controller {
 
 
 
-			$html['oktb_required'] = $this->Case_model->get_oktb_status($_POST['country_id']);
+			$html['oktb_required'] = $this->case_model->get_oktb_status($_POST['country_id']);
 
 			echo json_encode($html);
 			//print_r($visa_type_master); exit;
@@ -171,7 +175,7 @@ class Cases extends CI_Controller {
 	{
 		$html['state'] = '<option value="">Select State</option>';
 		if(isset($_POST['country_id']) and strlen($_POST['country_id']) > 0){
-		$states = $this->Case_model->get_dropdown_value('state_master','state_id','state_name','country_id = "' . $_POST['country_id'] . '"');
+		$states = get_dropdown_value('state_master','state_id','state_name','country_id = "' . $_POST['country_id'] . '"');
 		
 				if(count($states) > 0){
 					foreach ($states as $key => $value) {
@@ -188,7 +192,7 @@ class Cases extends CI_Controller {
 	{
 		$html['city'] = '<option value="">Select City</option>';
 		if(isset($_POST['state_id']) and strlen($_POST['state_id']) > 0){
-		$states = $this->Case_model->get_dropdown_value('city_master','city_id','city','state_id = "' . $_POST['state_id'] . '"');
+		$states = get_dropdown_value('city_master','city_id','city','state_id = "' . $_POST['state_id'] . '"');
 		
 				if(count($states) > 0){
 					foreach ($states as $key => $value) {
@@ -207,7 +211,7 @@ class Cases extends CI_Controller {
 		$data = array();
 		if(isset($_POST['visa_id'])){
 			
-			$visa_info = $this->Case_model->get_visa_value($_POST['visa_id']);
+			$visa_info = $this->case_model->get_visa_value($_POST['visa_id']);
 			echo json_encode($visa_info);
 			//print_r($visa_type_master); exit;
 		}else echo 0;
@@ -222,13 +226,13 @@ class Cases extends CI_Controller {
 
 		    	//print_r($_POST); exit;
 		    	
-			$max = $this->Case_model->maxCase();
+			$max = $this->case_model->maxCase();
 			$max = ($max == 0) ? '001' : ((strlen($max) == 1) ? ('00'.($max+1)) : ('0'.($max+1)));
 			
 			$code = "BTW".$max;
 			$data = $this->input->post();
 			$data = array_merge(array("case_code"=>$code),$data);
-			$visa_info = $this->Case_model->saveCases($data);
+			$visa_info = $this->case_model->saveCases($data);
 
 			echo 1;
 		}else echo 0;

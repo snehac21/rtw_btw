@@ -7,16 +7,16 @@
             </a>
 
             <div class="stats-label text-color">
-                <span class="font-extra-bold font-uppercase"><?php echo $this->session->userdata['first_name'].' '.$this->session->userdata['last_name']; ?></span>
+                <span class="font-extra-bold font-uppercase"><?php if(isset($this->session->userdata['first_name']) && isset($this->session->userdata['last_name'])) echo $this->session->userdata['first_name'].' '.$this->session->userdata['last_name']; ?></span>
 
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#">
-                        <small class="text-muted"><?php echo get_group_name($this->session->userdata['user_group_id']); ?></small>
+                        <small class="text-muted"><?php if(isset($this->session->userdata['user_group_id'])) echo get_group_name($this->session->userdata['user_group_id']); ?></small>
                     </a>
                 </div>
             </div>
         </div>
-        <?php if($this->session->userdata['user_group_id'] == 1) : ?>
+        <?php if(isset($this->session->userdata['user_group_id']) && $this->session->userdata['user_group_id'] == 1) : ?>
             <ul class="nav" id="side-menu">
                 <li class="active">
                     <a href="<?php echo base_url();?>/index.php/admin/home"> <span class="nav-label">Dashboard</span></a>

@@ -18,23 +18,6 @@ for($i = 0; $i <= 100 ; $i++){
 }
 ?>
 
-<style>
-input.error, select.error{
-    border: 1px solid red!important;
-}
-
-.dropdown-menu{
-    position: initial;
-}
-.datepicker{
-    position: absolute;
-}
-
-.whiteborder{
-    border-color: #fff !important;
-}
-</style>
-
 <div class="normalheader transition animated fadeIn small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -113,10 +96,6 @@ input.error, select.error{
                                             <label class = "col-sm-2 control-label">Type</label>
                                             <div class = "col-sm-10">
                                                 <label id = "cust_type" class = "form-control whiteborder"></label>
-                                            <?php 
-                        //$options = array('' => 'Select User Type','4'=> 'Agent','5'=> 'Corporate','6'=> 'Walkin');
-                        //echo form_dropdown('cust_type', $options, '','class ="form-control m-b whiteborder " id ="cust_type"');
-                        ?>
                                          </div>  
                                         </div>
                                     </div>
@@ -128,7 +107,7 @@ input.error, select.error{
                     <div class="col-sm-10">
 
                         <?php 
-                       //$options = array(''=>'Select Product','1'=> 'Visa','2'=> 'Air Ticket','3'=> 'Insurance','4' => 'OK To Board','5'=>'Packages','6'=>'Hotel Bookings');
+                       $product_type_master = array(''=>'Select Product Type') + $product_type_master;
                         echo form_dropdown('product', $product_type_master, '1','class ="form-control m-b" onchange = "showProductDetails(this.value)"');
                         ?>
                     </div>
@@ -183,14 +162,14 @@ input.error, select.error{
 
                     <div class="form-group"><label class="col-sm-2 control-label">Acceptance Date</label>
                         <div class="col-sm-10">
-                            <input id="acceptance_date" type="text" value="" name = "acceptance_date" class="form-control m-b datepicker2" placeholder = 'Select Acceptance Date' />
+                            <input id="acceptance_date" type="text" value="" name = "acceptance_date" class="datepicker form-control m-b " placeholder = 'Select Acceptance Date' />
                         </div>
                     </div>
                     
 
                     <div class="form-group"><label class="col-sm-2 control-label">Travel Date</label>
                     <div class="col-sm-6">
-                        <input id="visa_travel_date" type="text" value="" name = "visa_travel_date" class="datepicker2 form-control" placeholder = 'Select Travel Date' />
+                        <input id="visa_travel_date" type="text" value="" name = "visa_travel_date" class="datepicker form-control" placeholder = 'Select Travel Date' />
                     </div>
                     <div class="col-sm-4">
                         <div class="radio radio-success radio-inline">
@@ -238,7 +217,7 @@ input.error, select.error{
                                                 ?>
                                             </td>  
                                             <td class="text-left" >
-                                                <input id="pp_expiry0" type="text" value="" name = "passport[0][pp_expiry]" class="datepicker2 form-control pp_expiry" placeholder = 'PP Expiry Date' />
+                                                <input id="pp_expiry0" type="text" value="" name = "passport[0][pp_expiry]" class="datepicker form-control pp_expiry" placeholder = 'PP Expiry Date' />
                                             </td>  
                                             <td class="text-left" style = "width:10%">
                                                 <button type="button" onclick="$('#zone-to-geo-zone-row0').remove();" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-minus-circle"></i>
@@ -460,7 +439,7 @@ input.error, select.error{
 
                     <div class="form-group"><label class="col-sm-2 control-label">Travel Date</label>
                     <div class="col-sm-10">
-                        <input id="datapicker2" type="text" name = "air_travel_date" value="" class="form-control" placeholder = 'Select Travel Date'>
+                        <input type="text" name = "air_travel_date" value="" class="datepicker form-control" placeholder = 'Select Travel Date'>
                         <div class="radio radio-success radio-inline">
                             <?php $data = array('name'=> 'air_travel_data_type','value'=> 'Tentative','class' => 'form-control');
                         echo form_radio($data); ?>
@@ -562,7 +541,7 @@ input.error, select.error{
 
                     <div class="form-group"><label class="col-sm-2 control-label">Travel Date</label>
                     <div class="col-sm-10">
-                        <input id="datapicker2" type="text" value="02-16-2012" name = "travel_date" class="form-control" placeholder = 'Select Travel Date' />
+                        <input type="text" value="02-16-2012" name = "travel_date" class="datepicker form-control" placeholder = 'Select Travel Date' />
                     </div>
                     </div> 
                       
@@ -610,7 +589,7 @@ input.error, select.error{
 
                     <div class="form-group"><label class="col-sm-2 control-label">Travel Date</label>
                     <div class="col-sm-10">
-                        <input id="datapicker2" type="text" value="02-16-2012" name = "travel_date" class="form-control" placeholder = 'Select Travel Date' />
+                        <input type="text" value="" name = "travel_date" class="datepicker form-control" placeholder = 'Select Travel Date' />
                     </div>
                     </div> 
 
@@ -664,7 +643,7 @@ input.error, select.error{
 
                     <div class="form-group"><label class="col-sm-2 control-label">Travel Date</label>
                     <div class="col-sm-10">
-                        <input id="datapicker2" type="text" value="02-16-2012" name = "travel_date" class="form-control" placeholder = 'Select Travel Date' />
+                        <input type="text" value="" name = "travel_date" class="datepicker form-control" placeholder = 'Select Travel Date' />
                     </div>
                     </div> 
 
@@ -702,7 +681,7 @@ input.error, select.error{
 
                     <div class="form-group"><label class="col-sm-2 control-label">Travel Date</label>
                     <div class="col-sm-10">
-                        <input id="datapicker2" type="text" value="02-16-2012" name = "travel_date" class="form-control" placeholder = 'Select Travel Date' />
+                        <input type="text" value="02-16-2012" name = "travel_date" class="datepicker form-control" placeholder = 'Select Travel Date' />
                     </div>
                     </div> 
 
@@ -824,10 +803,7 @@ input.error, select.error{
                 FOR FRONT DESK OFFICER ONLY
             </div>
             <div class="panel-body">
-                <!--<div class="animated-panel zoomIn"><label>Tentative Document Pick up Date</label>
-                        <input id="tentative" type="text" value="02-16-2012" class="form-control">
-                    </div> --> 
-                    
+               
                     <div class="animated-panel zoomIn"><label>Department</label>
                         <?php 
                         $options = array(''=>'Select Department','small'=> 'Small Shirt','med'=> 'Medium Shirt','large'=> 'Large Shirt','xlarge' => 'Extra Large Shirt',);
@@ -877,8 +853,6 @@ input.error, select.error{
 
 
 <!-- Add User Pop-up -->
-
-
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -893,291 +867,12 @@ input.error, select.error{
                     </div>
                 </div>
 
+
 <script>
 
-$(document).ready(function(){
-    $("#inquiryForm").validate({
-    errorPlacement: function(error, element) {},
-            rules: {
-                customer: {
-                    required: true,
-                    minlength: 2
-                },
-                product: {
-                    required: true,
-                },
-                visa_product_type: {
-                    required: true,
-                },
-                visa_country: {
-                    required: true,
-                },
-                visa_type: {
-                    required: true,
-                },
-                visa_travel_from:{
-                    required:true
-                },
-                visa_travel_date: {
-                    required: true,
-                },
-                visa_travel_data_type: {
-                    required: true,
-                },
-                acceptance_date: {
-                    required:true,
-                },
-                visa_adult:{
-                    required:true
-                },
-                air_ticket_type: {
-                    required: true,
-                },
-                air_country: {
-                    required: true,
-                },
-                air_travel_from: {
-                    required: true,
-                },
-                air_travel_to: {
-                    required: true,
-                },
-                air_travel_date:{
-                    required:true
-                },
-                air_travel_data_type: {
-                    required: true,
-                },
-                suggested_airline: {
-                    required: true,
-                },
-                transit_visa:{
-                    required:true
-                },
-                provided_by:{
-                    required:true,
-                }
-            },
-            submitHandler: function() {
-               // alert("submitted!");
-               var frmdata = $('#inquiryForm').serialize();
-                $.ajax({
-                  url:"<?php echo base_url(); ?>index.php/cases/saveCases",
-                  data : frmdata,
-                  dataType :'json',
-                  type: 'POST',
-                  async: false,
-                  success:function(data) {
-                    location.reload();
-                  }
-               });
-            }
-        });
+    $(function () {
 
-$.validator.addClassRules("pp_state", {
-     required: true,
-});
-
-$.validator.addClassRules("pp_expiry", {
-     required: true,
-});
-
-});
-
-function setType(type_val){
-    $('select option[value="'+ type_val +'"]').attr("selected",true);
-}
-
-function showProductDetails(val){
-    $('.product').css('display','none');
-    if(val == 1){
-    $('#visa').css('display','block'); 
-    }else if(val == 2)
-    $('#air_ticket').css('display','block');
-    else if(val == 3)
-    $('#insurance').css('display','block'); 
-    else if(val == 4)
-    $('#oktb').css('display','block');
-    else if(val == 5)
-    $('#packages').css('display','block'); 
-    else if(val == 6)
-    $('#hotel').css('display','block');
-}
-
-
-$(function() {
-  
-    $('input[name=\'customer\']').autocomplete({
-        'source': function(request, response) {
-            $.ajax({
-                url: "<?php echo base_url(); ?>index.php/cases/getCustomer?value="+$("#customer").val(),
-                dataType: 'json',
-                success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            
-                            value: item['user_id'],
-                            label: item['name'],
-                        }
-                    }));
-                }
-            });
-        },
-        'select': function(item) {
-        $('input[name=\'customer\']').val(item['label']);
-        $('input[name=\'customer_id\']').val(item['value']);
-        getCustomerVal(item['value']);
-        }
     });
-
-  });
-
-function getCustomerVal(cust_id){
-     $.ajax({
-                  url:"<?php echo base_url(); ?>index.php/cases/getCustomerVal",
-                  dataType :'json',
-                  data : 'cust_id='+cust_id,
-                  type: 'POST',
-                  async: false,
-                  success:function(data) {
-                     if(data == 0){
-                        alert("Customer details not found!!");
-                        }else{
-
-                            $.map(data, function(item) {
-                        
-                            if(item['uname'] != 'undefined')
-                            {
-                                $("#cust_name").val(item['uname']);
-                            }
-                            if(item['code'] != 'undefined')
-                            {
-                                $("#cust_code").val(item['code']);
-                            }
-                            if(item['email'] != 'undefined')
-                            {
-                                $("#cust_email").val(item['email']);
-                            }
-                            if(item['contact'] != 'undefined')
-                            {
-                                $("#cust_mobile").val(item['contact']);
-                            }
-                            if(item['utype'] != 'undefined')
-                            {
-                               // $('select#cust_type option[value="'+ item['utype'] +'"]').attr("selected",true);
-                               $('#cust_type').html(item['utype']);
-                            }
-                            });
-                        }          
-                  }
-              });
-}
-
-function countrywiseVal(country_id){
-    $.ajax({
-                  url:"<?php echo base_url(); ?>index.php/cases/countrywiseVal",
-                  dataType :'json',
-                  data : 'country_id='+country_id,
-                  type: 'POST',
-                  async: false,
-                  success:function(data) {
-                     if(data == 0){
-                        alert("Details not found!!");
-                        }else{
-                                if(data.visa != 'undefined')
-                                {
-                                    $("#div1").html(data.visa);
-                                }
-                                if(data.city != 'undefined')
-                                {
-                                    $("#visa_city_div").html(data.city);
-                                }
-                                if(data.oktb_required != 'undefined')
-                                {
-                                    if(data.oktb_required == 'Yes') 
-                                        $("#co_related_services_oktb").prop('checked',true);
-                                    else
-                                        $("#co_related_services_oktb").prop('checked',false);
-                                }
-                            }          
-                  }
-              });
-}
-
-function visaVal(visa_id){
-    $.ajax({
-                  url:"<?php echo base_url(); ?>index.php/cases/visaInfoByVisaId",
-                  dataType :'json',
-                  data : 'visa_id='+visa_id,
-                  type: 'POST',
-                  async: false,
-                  success:function(data) {
-                     if(data == 0){
-                        alert("Details not found!!");
-                        }else{
-                            $("#visa_cost_table").css("display","block");
-                            $("#div2").css("display","block");
-
-                                if(data.visa_cost != 'undefined')
-                                {
-                                    $("#visa_charge").val(data.visa_cost);
-                                }
-                                if(data.service_charge != 'undefined')
-                                {
-                                    $("#visa_service").val(data.service_charge);
-                                }
-                                if(data.document_required != 'undefined')
-                                {
-                                    $("#visa_docs").html(data.document_required);
-                                }else $("#visa_docs").html('');
-
-                                if(data.processing_type != 'undefined')
-                                {
-                                    $("#visa_submitted").css('display','block');
-                                    $("#visa_submitted").html('<small>The visa shall be submitted <strong>'+ data.processing_type +'</strong></small>');
-                                }else{
-                                    $("#visa_submitted").css('display','none');
-                                }
-
-                                if(data.processing_days != 'undefined')
-                                {
-                                    $("#max_process_days").css('display','block');
-                                    $("#max_process_days").html('<small>Maximum Days to process <strong>' + data.processing_days + '</strong> days</small>');
-                                }else{
-                                    $("#max_process_days").css('display','none');
-                                }
-
-                                if(data.visa_validity_days != 'undefined')
-                                {
-                                    $("#validity").css('display','block');
-                                    $("#validity").html('<small>The validity is for <strong>'+ data.visa_validity_days +'</strong> days</small>');
-                                }else{
-                                    $("#validity").css('display','none');
-                                }
-
-                            }          
-                  }
-              });
-}
-
 
 </script>
 
-      <script type="text/javascript"><!--
-var passport_row = 0;
-
-function addPassport() {
-    passport_row++;
-
-    html  = '<tr id="zone-to-geo-zone-row' + passport_row + '">';
-    html += '  <td class="text-left"><select name="passport[' + passport_row + '][pp_state]" id="pp_state' + passport_row + '" class="form-control pp_state"><option value = "">Select PP Issue State</option></select></td>';
-    html += '  <td class="text-left"><input id="pp_expiry' + passport_row + '" type="text" value="" name="passport['+ passport_row +'][pp_expiry]" class="datepicker2 form-control pp_expiry" placeholder="PP Expiry Date"></td>';
-    html += '  <td class="text-left"><button type="button" onclick="$(\'#zone-to-geo-zone-row' + passport_row + '\').remove();" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-    html += '</tr>';
-    
-    $('#zone-to-geo-zone tbody').append(html);
-}
-
-
-
-//--></script>

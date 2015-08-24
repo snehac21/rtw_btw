@@ -21,7 +21,7 @@ class Case_model extends CI_Model {
     	//$data = $this->db->query('Select GROUP_CONCAT("\'",username,"\'") as name From users Where status = 1 AND active = 1 AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
         //CONCAT(username,"\/",usercode,"\/",email,"\/",contact_no)
 
-        $data = $this->db->query('Select CONCAT(username,", ",usercode,", ",email,", ",contact_no) as name, id From users Where status = 1 AND active = 1 AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
+        $data = $this->db->query('Select CONCAT(username,", ",usercode,", ",email,", ",contact_no) as name, id From users Where status = "1" AND active = "1" AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
 
     	if($data->num_rows() > 0){
             
@@ -33,7 +33,7 @@ class Case_model extends CI_Model {
     public function getCustomerVal($cust_id){
 
        // echo 'Select CONCAT(first_name," ",last_name) as name,usercode,email,contact_no,user_group_id id From users Where status = 1 AND active = 1 AND approve = 1 AND id = '.$cust_id; exit;
-        $data = $this->db->query('Select username as name,usercode,email,contact_no,user_group_id, id From users Where status = 1 AND active = 1 AND approve = 1 AND id = '.$cust_id);
+        $data = $this->db->query('Select username as name,usercode,email,contact_no,user_group_id, id From users Where status = "1" AND active = "1" AND approve = 1 AND id = '.$cust_id);
 
         if($data->num_rows() > 0){
             
@@ -68,7 +68,7 @@ class Case_model extends CI_Model {
 
     public function saveUser($data){
         $now_date = strtotime("now");
-        $this->db->insert('users',array('usercode'=>$data['code'],'user_group_id'=>$data['user_type'],'username'=>$data['user_name'],'password'=>md5($data['new_password']),'email'=>$data['user_email'],'contact_no'=>$data['user_contact'],'last_login'=>date('Y-m-d H:i:s'),'created'=>$now_date,'modified'=>$now_date));
+        $this->db->insert('users',array('usercode'=>$data['code'],'user_group_id'=>$data['user_type'],'username'=>$data['user_name'],'password'=>md5($data['new_password']),'email'=>$data['user_email'],'contact_no'=>$data['user_contact'],'last_login'=>date('Y-m-d H:i:s'),'created'=>$now_date,'modified'=>$now_date, 'active'=>1,'approve'=>1));
 
         /** To get last insert ID **/
         $user_id = $this->db->insert_id();
@@ -91,8 +91,6 @@ class Case_model extends CI_Model {
             }
         }
         //echo $this->db->last_query();
-
-
         return $value;
     }
 
@@ -104,7 +102,7 @@ class Case_model extends CI_Model {
     }
 
     public function get_visa_value($visa_id){
-        $data = $this->db->query("Select urgent_days,visa_validity_days,processing_days,processing_type,visa_cost,service_charge,urgent_days,document_required From visa_type_master Where visa_type_id = ".$visa_id);
+        $data = $this->db->query("Select other_services,urgent_days,visa_validity_days,processing_days,processing_type,visa_cost,service_charge,urgent_days,document_required From visa_type_master Where visa_type_id = ".$visa_id);
         if($data->num_rows() > 0){
            return $data->first_row();
         }

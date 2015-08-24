@@ -88,14 +88,14 @@
                     <div class="form-group"><label class="col-sm-4 control-label">Password</label>
                         <div class="col-sm-8">
                             <?php $data = array('name'=> 'new_password','id' => 'new_password','value'=> '','class' => 'form-control','placeholder' => 'New Password');
-                            echo form_input($data); ?>
+                            echo form_password($data); ?>
                             <?php echo form_error('new_password', '<p class="text-danger">', '</p>');?>
                         </div>
                     </div>
                     <div class="form-group"><label class="col-sm-4 control-label">Confirm Password</label>
                         <div class="col-sm-8">
                             <?php $data = array('name'=> 'confirm_password','id' => 'confirm_password','value'=> '','class' => 'form-control','placeholder' => 'Confirm Password');
-                            echo form_input($data); ?>
+                            echo form_password($data); ?>
                             <?php echo form_error('confirm_password', '<p class="text-danger">', '</p>');?>
                         </div>
                     </div>

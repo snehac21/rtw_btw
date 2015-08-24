@@ -7,3 +7,7 @@ label.error
 {
 	color:#ff0000 !important;
 }
+div#corporateDiv,div#personalDiv
+{
+	display:none;
+}

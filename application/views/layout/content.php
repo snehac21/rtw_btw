@@ -1,5 +1,4 @@
 <?php 
-
 get_instance()->load->helper('global_helper');
 $this->load->view('layout/header');  
 /*load  js specific to particular view */

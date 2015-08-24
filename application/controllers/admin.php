@@ -5,14 +5,16 @@ class Admin extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		if(isset($this->session->userdata['id']) && $this->session->userdata['user_group_id'] == 1){
+		if(isset($this->session->userdata['id']) && in_array(1,$this->session->userdata['user_group_id'])){
 			$this->load->model('admin_model');
 			$this->load->model('case_model');
+			$this->load->library('grocery_CRUD');
 		}/*else{
 			//show_403();
 		}*/
 	}
 
+	
 	public function home()
 	{
 		$data['content'] ='admin/home';
@@ -32,6 +34,10 @@ class Admin extends CI_Controller {
 		$data['user_type_arr'] = $this->case_model->get_dropdown_value('user_groups','id','name','allowRegistration=1');
 		$data['country_master'] = $this->case_model->get_dropdown_value('country_master','country_id','country');
 		//$data['role_arr'] =$this->admin_model->get_all_roles();
+		if($this->input->post('user_country') > 0)
+			$data['state_master'] = $this->case_model->get_dropdown_value('state_master','state_id','state_name','country_id='.$this->input->post('user_country'));
+		if($this->input->post('user_state') > 0)
+			$data['city_master'] = $this->case_model->get_dropdown_value('city_master','city_id','city','state_id='.$this->input->post('user_state'));
 		$data['content'] ='admin/add_user';
 		$this->load->view('layout/content',$data);
 	}
@@ -55,7 +61,8 @@ class Admin extends CI_Controller {
 	
 	public function save_user()
 	{
-		if(isset($_POST['uid'])){
+		$this->load->helper('security');
+		if(isset($_POST['id'])){
 		$config = array(
                array(
                      'field'   => 'username', 
@@ -75,22 +82,17 @@ class Admin extends CI_Controller {
             );
 		}else{
 			$config = array(
-			array(
-                     'field'   => 'username', 
-                     'label'   => 'Username', 
-                     'rules'   => 'required|email|is_unique[users.username]'
-                  ),
-               array(
-                     'field'   => 'pass', 
-                     'label'   => 'Password', 
-                     'rules'   => 'required|min_length[5]|matches[cpass]'
-                  ),
-				  array(
-                     'field'   => 'cpass', 
-                     'label'   => 'Confirm Password', 
-                     'rules'   => 'required|min_length[5]'
-                  )
-				  );
+			array('field'   => 'user_type', 'label'   => 'User Type', 'rules'   => 'required'),
+			array('field'   => 'user_name', 'label'   => 'Username', 'rules'   => 'required|min_length[2]|is_unique[users.username]'),
+            array('field'   => 'new_password','label'   => 'Password', 'rules'   => 'required|min_length[5]|matches[confirm_password]'),
+			array('field'   => 'confirm_password', 'label'   => 'Confirm Password', 'rules'   => 'required|min_length[5]'),
+			array('field'   => 'user_email', 'label' =>'Email', 'rules'=> 'required|valid_email|is_unique[users.email]'),
+			array('field'   => 'user_contact', 'label'   => 'Contact Number', 'rules'   => 'required|is_natural|max_length[12]'),
+			//array('field'   => 'bus_name', 'label'   => 'Business Name', 'rules'   => 'required'),
+			array('field'   => 'user_country', 'label'   => 'Country', 'rules'   => 'required'),
+			array('field'   => 'user_state', 'label'   => 'State', 'rules'   => 'required'),
+			array('field'   => 'user_city', 'label'   => 'City', 'rules'   => 'required')
+			);
 		}
 
 		$this->form_validation->set_rules($config);
@@ -98,7 +100,7 @@ class Admin extends CI_Controller {
 		if ($this->form_validation->run() == FALSE)
 		{
 			if(isset($_POST['uid']))
-				$this->edit_user($this->input->post('uid'),'edit');
+				$this->edit_user($this->input->post('id'),'edit');
 			else
 				$this->add_new_user();
 		}
@@ -154,7 +156,7 @@ class Admin extends CI_Controller {
 		}else
 			$this->settings();
 			
-	}
+	} 
 }
 
 /* End of file welcome.php */

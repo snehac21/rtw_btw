@@ -28,6 +28,14 @@ $("#addUserForm").validate({
                 bus_name:{
                     required:true
                 },
+                first_name: {
+                    required: true,
+                    minlength: 2
+                },
+                last_name: {
+                    required: true,
+                    minlength: 2
+                },
                 user_country:{
                   required:true
                 },
@@ -67,6 +75,12 @@ $("#addUserForm").validate({
                 bus_name:{
                     required:'Please enter business name'
                 },
+                last_name:{
+                    required:'Please enter last name'
+                },
+                first_name:{
+                    required:'Please enter first name'
+                },
                 user_country:{
                   required:'Please select country'
                 },
@@ -82,6 +96,19 @@ $("#addUserForm").validate({
 
             }
         });
+
+$('#user_type').change(function(){
+    var user_type = $('#user_type').val();
+     $('#corporateDiv').css('display','none');
+      $('#personalDiv').css('display','none');
+    if(user_type == 4 || user_type == 5)
+    {
+      $('#corporateDiv').css('display','block');
+    }else
+    {
+        $('#personalDiv').css('display','block');
+    }
+});
 })
 
 function expandOptFields(){
@@ -146,3 +173,5 @@ function statewiseCity(state_id){
                   }
               });
 }
+
+

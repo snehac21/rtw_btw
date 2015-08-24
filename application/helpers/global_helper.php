@@ -16,4 +16,22 @@ if(!function_exists('get_group_name')){
 	}
 }
 
+/*get all group od single user by user id*/
+
+if(!function_exists('get_all_user_groups')){
+	function get_all_user_groups($user_id)
+	{
+		$user_groups =array();
+		$ci =& get_instance();
+		$result = $ci->db->get_where('user_groups_mapping',array('user_id'=>$user_id,'status'=>'1'))->result_array();
+		foreach($result as $r)
+		{
+			$user_groups[] = $r['user_group_id'];
+		}
+		return $user_groups;
+	}
+}
+
+
+
 ?>

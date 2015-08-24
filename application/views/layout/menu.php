@@ -24,7 +24,7 @@
                 <li>
                     <a href="#"><span class="nav-label">Users</span><span class="fa arrow"></span> </a>
                     <ul class="nav nav-second-level">
-                        <li><a href="<?php echo base_url(); ?>/index.php/admin/users_listing">Users Listing</a></li>
+                        <li><a href="<?php echo base_url(); ?>/index.php/admin/users_listing">Manage Users</a></li>
                         <li><a href="<?php echo base_url(); ?>/index.php/admin/add_new_user">Add New User</a></li>
                     </ul>
                 </li>

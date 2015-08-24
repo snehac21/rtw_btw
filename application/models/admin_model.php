@@ -18,12 +18,13 @@ class Admin_model extends CI_Model {
 	
 	public function get_all_users()
 	{
-		$this->db->select('*');
+		$this->db->select('users.*,state_master.state_name,country_master.country,city_master.city');
 		$this->db->from('users');
-		$this->db->join('roles','roles.rid=users.rid');
+		$this->db->join('country_master', 'country_master.country_id = users.country_id', 'left outer');
+		$this->db->join('state_master', 'state_master.state_id = users.state_id', 'left outer');
+		$this->db->join('city_master', 'city_master.city_id = users.city_id', 'left outer');
 		$this->db->where('users.status','1');
-		$this->db->where('users.uid !=',1);
-		$this->db->order_by('uid','desc');
+		$this->db->order_by('created','desc');
 		$result = $this->db->get();
 		if($result->num_rows() > 0)
 		{

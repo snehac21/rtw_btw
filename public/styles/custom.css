@@ -19,3 +19,6 @@ label.error
 .modal-header{
     padding:10px!important;
 }
+body {
+    font-size: 12px;
+}

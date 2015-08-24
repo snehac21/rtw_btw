@@ -9,13 +9,12 @@ foreach($css_files as $file): ?>
 body
 {
 	font-family: Arial;
-	font-size: 14px;
+	
 }
 a {
     color: blue;
     text-decoration: none;
-    font-size: 14px;
-}
+   }
 a:hover
 {
 	text-decoration: underline;
@@ -31,12 +30,12 @@ a:hover
                         <span>Masters</span>
                     </li>
                     <li class="active">
-                        <span>Add New User</span>
+                        <span><?php echo $extra['name'];?></span>
                     </li>
                 </ol>
             </div>
             <h2 class="font-light m-b-xs">
-                Add New User
+                <?php echo $extra['name'];?>
             </h2>
         </div>
     </div>

@@ -32,7 +32,7 @@ class Masters extends CI_Controller {
 	    $crud->set_primary_key('country_id','country_master');
 	    //$crud->set_relation('country','countries','country_title');
 	 
-	    $output = $crud->render();
+	    $output = $crud->render(array('name' => 'Country Management'));
 	 
 	    $this->_example_output($output);
 	}
@@ -50,7 +50,7 @@ class Masters extends CI_Controller {
 	    $crud->set_primary_key('country_id','country_master');
 	    $crud->set_relation('country_id','country_master','country');
 	 
-	    $output = $crud->render();
+	    $output = $crud->render(array('name' => 'State Management'));
 	 
 	    $this->_example_output($output);
 	}
@@ -67,7 +67,7 @@ class Masters extends CI_Controller {
 	    $crud->set_primary_key('state_id','state_master');
 	    $crud->set_relation('state_id','state_master','state_name');
 	 
-	    $output = $crud->render();
+	    $output = $crud->render(array('name' => 'City Management'));
 	 
 	    $this->_example_output($output);
 	}
@@ -81,8 +81,7 @@ class Masters extends CI_Controller {
 	 	$crud->columns('designation','status');
 	    $crud->fields('designation','status');
 	    $crud->required_fields('designation');
-	    $output = $crud->render();
-	 
+	    $output = $crud->render(array('name' => 'Designation Management'));
 	    $this->_example_output($output);
 	}
  

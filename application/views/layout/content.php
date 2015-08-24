@@ -7,7 +7,7 @@ if(isset($js))
 	//echo '<pre>'; print_r($js); exit;
 	foreach($js as $single_js)
 	{
-		echo '<script type="text/javascript" src="'.base_url().'public/scripts/'.$single_js.'"></script>';
+		echo '<script type="text/javascript" src="'.base_url().'public/'.$single_js.'"></script>';
 	}
 }
 /*load css specific to particular view */
@@ -15,7 +15,7 @@ if(isset($css))
 {
 	foreach($css as $single_css)
 	{
-		echo '<link rel="stylesheet" href="'.base_url().'public/styles/'.$single_css.'"/>';
+		echo '<link rel="stylesheet" href="'.base_url().'public/'.$single_css.'"/>';
 	}
 }
 

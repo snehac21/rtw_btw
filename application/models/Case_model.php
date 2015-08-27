@@ -21,7 +21,7 @@ class Case_model extends CI_Model {
     	//$data = $this->db->query('Select GROUP_CONCAT("\'",username,"\'") as name From users Where status = 1 AND active = 1 AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
         //CONCAT(username,"\/",usercode,"\/",email,"\/",contact_no)
 
-        $data = $this->db->query('Select CONCAT(username,", ",usercode,", ",email,", ",contact_no) as name, id From users Where status = "1" AND active = "1" AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
+        $data = $this->db->query('Select CONCAT(username,", ",usercode,", ",email,", ",contact_no) as name, id From users Where status = "1" AND active = "Yes" AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
 
     	if($data->num_rows() > 0){
             
@@ -33,7 +33,7 @@ class Case_model extends CI_Model {
     public function getCustomerVal($cust_id){
 
        // echo 'Select CONCAT(first_name," ",last_name) as name,usercode,email,contact_no,user_group_id id From users Where status = 1 AND active = 1 AND approve = 1 AND id = '.$cust_id; exit;
-        $data = $this->db->query('Select username as name,usercode,email,contact_no,user_group_id, id From users Where status = "1" AND active = "1" AND approve = 1 AND id = '.$cust_id);
+        $data = $this->db->query('Select username as name,usercode,email,contact_no,user_group_id, id From users Where status = "1" AND active = "Yes" AND approve = 1 AND id = '.$cust_id);
 
         if($data->num_rows() > 0){
             
@@ -68,7 +68,7 @@ class Case_model extends CI_Model {
 
     public function saveUser($data){
         $now_date = strtotime("now");
-        $this->db->insert('users',array('usercode'=>$data['code'],'user_group_id'=>$data['user_type'],'username'=>$data['user_name'],'password'=>md5($data['new_password']),'email'=>$data['user_email'],'contact_no'=>$data['user_contact'],'last_login'=>date('Y-m-d H:i:s'),'created'=>$now_date,'modified'=>$now_date, 'active'=>1,'approve'=>1));
+        $this->db->insert('users',array('usercode'=>$data['code'],'user_group_id'=>$data['user_type'],'username'=>$data['user_name'],'password'=>md5($data['new_password']),'email'=>$data['user_email'],'contact_no'=>$data['user_contact'],'last_login'=>date('Y-m-d H:i:s'),'created'=>$now_date,'modified'=>$now_date, 'active'=>'Yes','approve'=>1));
 
         /** To get last insert ID **/
         $user_id = $this->db->insert_id();
@@ -111,38 +111,83 @@ class Case_model extends CI_Model {
 
     /* Save Cases in db */
     public function saveCases($data){
-        $now_date = strtotime("now");
+        $now_date = strtotime("now"); 
+        $travel_date = strtotime($data['visa_travel_date']);
 
+
+        /* Insert into case logs table */
         //print_r($data); exit;
-        $this->db->insert('case_table',array('case_code'=>$data['case_code'],'front_user_id'=>1,'customer_id'=>$data['customer_id'],'customer_code'=>$data['cust_code'],'product_type_id'=>$data['product'],'date_status'=>'','created'=>$now_date,'updated'=>$now_date,'tr_status'=>2));
+        $this->db->insert('case_table',array('case_code'=>$data['case_code'],'front_user_id'=>1,'customer_id'=>$data['customer_id'],'customer_code'=>$data['cust_code'],'product_type_id'=>$data['product'],'created'=>$now_date,'updated'=>$now_date,'tr_status'=>2));
 
         $product = $data['product'];
 
         /** To get last insert ID **/
         $case_id = $this->db->insert_id();
 
+        /* Visa Cases */
         if($product == 1){
 
+            /* To check if visa case is urgent or not */
+            $cur_date = date('d-m-Y');
+
+            $urg_days = (strlen($data['visa_urgent_days']) > 0) ? $data['visa_urgent_days'] : 0 ;
+
+            $urgent_date = date('d-m-Y', strtotime("+".$urg_days." days"));
+
+            //echo $data['visa_travel_date'] .'<br>'.$cur_date.'<br>'.$urgent_date;
+
+            if (($data['visa_travel_date'] >= $cur_date) && ($data['visa_travel_date'] <= $urgent_date))
+            {
+              $urgent_visa = 'Yes';
+            }else{
+               $urgent_visa = 'No'; 
+            }
+
             $total_count = $data['visa_adult'] + $data['visa_child']; 
-            $disc = ((strlen($data['visa_disc']) > 0) ? $data['visa_disc'] : 0);
+            $disc = (( isset($data['visa_disc']) && strlen($data['visa_disc']) > 0) ? $data['visa_disc'] : 0);
             $total_amount_with_disc = ($total_count * ($data['visa_charge'] + $data['visa_service'])) - $disc;
             $total_amount = $total_count * ($data['visa_charge'] + $data['visa_service']);
             
-            $this->db->update('case_table',array('country_id'=>$data['visa_country'],'travel_from'=>$data['visa_city'],'total_amount'=>$total_amount,'discount'=>$disc,'final_amount'=>$total_amount_with_disc,'adult_count'=>$data['visa_adult'],'children_count'=>$data['visa_child'],'total_count'=>$total_count,'date_status'=>$data['visa_travel_data_type'],'travel_date'=>$data['visa_travel_date']),array('case_id'=>$case_id));
+            /* Update into case logs table  */
+            $this->db->update('case_table',array('country_id'=>$data['visa_country'],'travel_date'=>$travel_date,'travel_from'=>$data['visa_travel_from'],'total_amount'=>$total_amount,'discount'=>$disc,'final_amount'=>$total_amount_with_disc,'adult_count'=>$data['visa_adult'],'children_count'=>$data['visa_child'],'total_count'=>$total_count,'date_status'=>$data['visa_travel_date_type']),array('case_id'=>$case_id));
 
-            $this->db->insert('visa_case',array('case_id'=>$case_id,'visa_type_id'=>$data['visa_type'],'product_type'=>$data['visa_product_type'],'urgent_visa'=>$data['visa_urgent'],'oktb_applied'=>$data['visa_oktb'],'visa_cost'=>$data['visa_charge'],'service_charge'=>$data['visa_service'],'doc_required'=>$data['visa_docs'],'communication'=>$data['visa_communication']));
+            $co_related_services = implode(',',$data['co_related_services']);
 
-            $group_no = 'GVG-'. rand(111111,999999);
+            /* Insert into visa case table */
+            $this->db->insert('visa_case',array('case_id'=>$case_id,'visa_type_id'=>$data['visa_type'],'visa_cost'=>$data['visa_charge'],'service_charge'=>$data['visa_service'],'doc_required'=>$data['visa_docs'],'communication'=>$data['visa_communication'],'provided_by'=>$data['provided_by'],'co_related_services'=>$co_related_services,'urgent_visa'=>$urgent_visa));
+
+            $visa_case_id = $this->db->insert_id();
+
+            /* Insert into visa meta tables */
+            $meta_fields = array('adult_designation','invitee_designation','acceptance_date','passport');
+
+            foreach($meta_fields as $key => $value){
+                if($value == 'passport'){
+                    foreach($data['passport'] as $k => $v){ foreach($v as $k1 => $v1)
+                        $this->db->insert('visa_meta',array('visa_id'=>$visa_case_id,'meta_key'=>$k1,'meta_index'=>$k,'meta_value'=>$v1));
+                    }
+                }else
+                $this->db->insert('visa_meta',array('visa_id'=>$visa_case_id,'meta_key'=>$value,'meta_value'=>$data[$value]));
+            }
+
+            /* Insert into Co-related services tables */
+
+            foreach($data['co_related_services'] as $kc => $vc){
+                $table = $kc.'_case';
+                $field_id = $kc.'_id';
+                $this->db->insert($table,array('case_id'=>$case_id));
+            }
+
+            /*$group_no = 'GVG-'. rand(111111,999999);
             $this->db->insert('visa_app_group',array('case_id'=>$case_id,'user_id'=>1,'group_no'=>$group_no,'visa_fee'=>$total_amount_with_disc,'app_date'=>$now_date,'adult'=>$data['visa_adult'],'children'=>$data['visa_child'],'tr_status'=>2));
 
-            /** To get last insert ID **/
             $group_id = $this->db->insert_id();
 
             $app_total = $data['visa_charge'] + $data['visa_service'];
             for($i = 1;$i <= $total_count; $i++){
                 $app_no = 'GV-'. rand(111111,999999);
                 $this->db->insert('visa_tbl',array('group_id'=>$group_id,'app_no'=>$app_no,'tr_status'=>2,'visa_fee'=>$app_total,'create_date'=>$now_date,'apply_date'=>$now_date));
-            }
+            }*/
 
         }
             
@@ -151,7 +196,7 @@ class Case_model extends CI_Model {
 
     /* Get max case value */
     public function maxCase(){
-        $data = $this->db->query('Select case_code From case_table Where 1 Order by case_id desc Limit 0,1');
+        $data = $this->db->query('Select count(case_code) as case_count From case_table Where 1 Order by case_id desc Limit 0,1');
         return $data->num_rows();
     }
 }

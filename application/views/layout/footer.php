@@ -20,17 +20,8 @@
 
     $(function () {
 
-        $('#visa_travel_date').datepicker();
-        $('.datepicker').datepicker();
-        $('.datepicker2').datepicker();
-            $("#datepicker").on("changeDate", function(event) {
-                $("#my_hidden_input").val(
-                        $("#datepicker").datepicker('getFormattedDate')
-                )
-            });
-
-            $('#datapicker2, #tentative').datepicker();
-
+        $('.datepicker').datepicker({ format: 'dd-mm-yyyy' });
+        $('.datepicker2').datepicker({ format: 'dd-mm-yyyy' });
     });
 
 </script>

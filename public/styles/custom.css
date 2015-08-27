@@ -19,3 +19,7 @@ label.error
 .modal-header{
     padding:10px!important;
 }
+
+.datepicker2{
+	position: absolute;
+}

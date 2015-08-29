@@ -19,22 +19,22 @@
         <?php if(in_array(1, $this->session->userdata('user_group_id'))) : ?>
             <ul class="nav" id="side-menu">
                 <li class="active">
-                    <a href="<?php echo base_url();?>/index.php/admin/home"> <span class="nav-label">Dashboard</span></a>
+                    <a href="<?php echo base_url();?>index.php/admin/home"> <span class="nav-label">Dashboard</span></a>
                 </li>
                 <li>
                     <a href="#"><span class="nav-label">Users</span><span class="fa arrow"></span> </a>
                     <ul class="nav nav-second-level">
-                        <li><a href="<?php echo base_url(); ?>/index.php/admin/users_listing">Manage Users</a></li>
-                        <li><a href="<?php echo base_url(); ?>/index.php/admin/add_new_user">Add New User</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/admin/users_listing">Manage Users</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/admin/add_new_user">Add New User</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="#"><span class="nav-label">Masters</span><span class="fa arrow"></span> </a>
                     <ul class="nav nav-second-level">
-                        <li><a href="<?php echo base_url(); ?>/index.php/masters/country_management">Country</a></li>
-                        <li><a href="<?php echo base_url(); ?>/index.php/masters/state_management">State</a></li>
-                        <li><a href="<?php echo base_url(); ?>/index.php/masters/city_management">City</a></li>
-                        <li><a href="<?php echo base_url(); ?>/index.php/masters/designation_management">Designation</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/masters/country_management">Country</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/masters/state_management">State</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/masters/city_management">City</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/masters/designation_management">Designation</a></li>
                     </ul>
                 </li>
             </ul>

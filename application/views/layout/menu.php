@@ -43,13 +43,13 @@
         <?php if(in_array(2, $this->session->userdata('user_group_id'))) : ?>
             <ul class="nav" id="side-menu">
                 <li class="active">
-                    <a href="<?php echo base_url();?>/index.php/admin/home"> <span class="nav-label">Dashboard</span></a>
+                    <a href="<?php echo base_url();?>index.php/admin/home"> <span class="nav-label">Dashboard</span></a>
                 </li>
                 <li>
                     <a href="#"><span class="nav-label">Users</span><span class="fa arrow"></span> </a>
                     <ul class="nav nav-second-level">
-                        <li><a href="<?php echo base_url(); ?>/index.php/cases/caseform">Add Inquiry</a></li>
-                        <li><a href="<?php echo base_url(); ?>/index.php/cases/listing">Inquiry Listing</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/cases/caseform">Add Inquiry</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/cases/listing">Inquiry Listing</a></li>
                     </ul>
                 </li>
                 

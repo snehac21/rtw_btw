@@ -62,6 +62,15 @@ class Login extends CI_Controller {
 		if(in_array(1, $this->session->userdata('user_group_id')))
 		{
 			redirect('admin/home');
+		}else if(in_array(2, $this->session->userdata('user_group_id')))
+		{
+			redirect('admin/home');
+		}else if(in_array(3, $this->session->userdata('user_group_id')))
+		{
+			redirect('admin/home');
+		}else if(in_array(4, $this->session->userdata('user_group_id')))
+		{
+			redirect('admin/home');
 		}else
 		redirect('login/index');
 	}

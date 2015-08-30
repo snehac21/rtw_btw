@@ -1,3 +1,8 @@
+<style>
+.datepicker, .datepicker2{
+    position:absolute;
+}
+</style>
 <?php
 
 /**
@@ -10,6 +15,11 @@
 $count = array();
 for($i =0 ; $i <= 50 ; $i++){
     $count[$i] = $i; 
+}
+
+$count_adult = array();
+for($i =1 ; $i <= 50 ; $i++){
+    $count_adult[$i] = $i; 
 }
 
 $age = array(''=>'Select Age');
@@ -132,9 +142,13 @@ for($i = 0; $i <= 100 ; $i++){
                         $options = array('' => 'Select Visa Type');
                         echo form_dropdown('visa_type', $options, '','class ="form-control m-b" onchange = "visaVal(this.value);"');
                         ?>
+
                         </div>
 
                         <div id = "div2" style = "display:none;">
+
+                            <input type = "hidden" name = "visa_urgent_days" id = "visa_urgent_days" value = "" />
+
                             <div class="col-md-5 forum-info animated-panel zoomIn" id = "visa_submitted" style="animation-delay: 1s;">
                                 <small>The visa shall be submitted</small>
                             </div>
@@ -162,7 +176,7 @@ for($i = 0; $i <= 100 ; $i++){
 
                     <div class="form-group"><label class="col-sm-2 control-label">Acceptance Date</label>
                         <div class="col-sm-10">
-                            <input id="acceptance_date" type="text" value="" name = "acceptance_date" class="datepicker form-control m-b " placeholder = 'Select Acceptance Date' />
+                            <input id="acceptance_date" type="text" value="" style = "width: 95%;" name = "acceptance_date" class="datepicker form-control m-b " placeholder = 'Select Acceptance Date' />
                         </div>
                     </div>
                     
@@ -189,7 +203,7 @@ for($i = 0; $i <= 100 ; $i++){
                         <div class="form-group"><label class = "col-sm-2 control-label">Adult</label>
                                             <div class = "col-sm-4">
                                             <?php 
-                                            echo form_dropdown('visa_adult', $count, '','class ="form-control m-b", id = "visa_adult" ');
+                                            echo form_dropdown('visa_adult', $count_adult, '','class ="form-control m-b", id = "visa_adult" ');
                                          ?>
                                         </div>
 
@@ -203,7 +217,7 @@ for($i = 0; $i <= 100 ; $i++){
                                 <table id="zone-to-geo-zone" class="table table-striped table-bordered table-hover">
                                     <thead>
                                       <tr>
-                                        <td class="text-left">PP Issue State</td>
+                                        <td class="text-left" style = "width:44%">PP Issue State</td>
                                         <td class="text-left">PP Expiry Date</td>
                                         <td></td>
                                       </tr>
@@ -217,7 +231,7 @@ for($i = 0; $i <= 100 ; $i++){
                                                 ?>
                                             </td>  
                                             <td class="text-left" >
-                                                <input id="pp_expiry0" type="text" value="" name = "passport[0][pp_expiry]" class="datepicker form-control pp_expiry" placeholder = 'PP Expiry Date' />
+                                                <input id="pp_expiry0" style = "width:38%" type="text" value="" name = "passport[0][pp_expiry]" class="datepicker form-control pp_expiry" placeholder = 'PP Expiry Date' />
                                             </td>  
                                             <td class="text-left" style = "width:10%">
                                                 <button type="button" onclick="$('#zone-to-geo-zone-row0').remove();" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-minus-circle"></i>
@@ -256,49 +270,8 @@ for($i = 0; $i <= 100 ; $i++){
                                 </div></th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="OKTB" id = "co_related_services_oktb" name="co_related_services_oktb">
-                                    <label for="inlinecheckbox1"> OKTB </label>
-                                </div></td>
-                                <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="FOREX" name="co_related_services_forex" >
-                                    <label for="inlinecheckbox1"> FOREX </label>
-                                </div></td>
-                                <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="HOTEL" name="co_related_services_hotel" >
-                                    <label for="inlinecheckbox1"> HOTEL </label>
-                                </div></td>
-                            </tr>
-                            <tr>
-                                <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="URGENT" name="co_related_services_urgent" >
-                                    <label for="inlinecheckbox1"> URGENT </label>
-                                </div></td>
-                                <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="INSURANCE" name="co_related_services_insurance" >
-                                    <label for="inlinecheckbox1"> INSURANCE </label>
-                                </div></td>
-                                <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="PACKAGES" name="co_related_services_packages" >
-                                    <label for="inlinecheckbox1"> PACKAGES </label>
-                                </div></td>
-                            </tr>
-                            <tr>
-                                <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="AIR TICKETS" name="co_related_services_air" >
-                                    <label for="inlinecheckbox1"> AIR TICKETS </label>
-                                </div></td>
-                                <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="PASSPORT" name="co_related_services_passport" >
-                                    <label for="inlinecheckbox1"> PASSPORT </label>
-                                </div></td>
-                                <td><div class="checkbox checkbox-info checkbox-inline">
-                                    <input type="checkbox" value="TOURS" name="co_related_services_tours" >
-                                    <label for="inlinecheckbox1"> TOURS </label>
-                                </div></td>
-                            </tr>
+                            <tbody id = "co_related_services">
+                            
                             </tbody>
                         </table>
                         </div>
@@ -866,13 +839,4 @@ for($i = 0; $i <= 100 ; $i++){
                         </div>
                     </div>
                 </div>
-
-
-<script>
-
-    $(function () {
-
-    });
-
-</script>
 

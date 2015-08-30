@@ -132,6 +132,9 @@ function visaVal(visa_id){
                      if(data == 0){
                         alert("Details not found!!");
                         }else{
+
+                            visaCoRelatedServices(visa_id);
+
                             $("#visa_cost_table").css("display","block");
                             $("#div2").css("display","block");
 
@@ -147,6 +150,11 @@ function visaVal(visa_id){
                                 {
                                     $("#visa_docs").html(data.document_required);
                                 }else $("#visa_docs").html('');
+
+                                if(data.urgent_days != 'undefined')
+                                {
+                                    $("#visa_urgent_days").val(data.urgent_days);
+                                }else $("#visa_urgent_days").val('');
 
                                 if(data.processing_type != 'undefined')
                                 {
@@ -177,6 +185,19 @@ function visaVal(visa_id){
               });
 }
 
+function visaCoRelatedServices(visa_id){
+    
+     $.ajax({
+                  url:base_url + "index.php/cases/visaCoRelatedServices",
+                  dataType :'html',
+                  data : 'visa_id='+visa_id,
+                  type: 'POST',
+                  async: false,
+                  success:function(data) {
+                     $("#co_related_services").html(data);
+                     }
+              });
+}
 
 function addPassport() {
     passport_row++;

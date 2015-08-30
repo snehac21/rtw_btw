@@ -23,10 +23,10 @@ class Admin extends CI_Controller {
 	
 	public function users_listing()
 	{
-		$data['js'][] = 'vendor/datatables/media/js/jquery.dataTables.min.js';
-		$data['js'][] = 'vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js';
-		$data['js'][] = 'scripts/custom/datatable.js';
-		$data['css'][] = 'vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css';
+		$data['files_js'][] = 'vendor/datatables/media/js/jquery.dataTables.min.js';
+		$data['files_js'][] = 'vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js';
+		$data['js'][] = 'custom/datatable.js';
+		$data['files_css'][] = 'vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css';
 		
 		$users_array = $this->admin_model->get_all_users();
 		$data['users_array'] =$users_array;
@@ -35,7 +35,7 @@ class Admin extends CI_Controller {
 	}
 	public function add_new_user()
 	{
-		$data['js'][] = 'scripts/custom/add_user.js';
+		$data['js'][] = 'custom/add_user.js';
 		$data['user_type_arr'] = $this->case_model->get_dropdown_value('user_groups','id','name','allowRegistration=1');
 		$data['country_master'] = $this->case_model->get_dropdown_value('country_master','country_id','country');
 		//$data['role_arr'] =$this->admin_model->get_all_roles();
@@ -139,7 +139,7 @@ class Admin extends CI_Controller {
 	{
 		$data = $this->admin_model->get_settings();
 		$data['content'] ='admin/settings';
-		$this->load->view('partials/custom',$data);
+		$this->load->view('partials/	',$data);
 	}
 
 	public function save_settings()

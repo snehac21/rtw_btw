@@ -64,6 +64,7 @@ class Admin_model extends CI_Model {
 			$max = ($max == 0) ? '001' : ((strlen($max) == 1) ? ('00'.($max+1)) : ('0'.($max+1)));
 			if($data['user_group_id'] == 4) $code = 'A'.$max ;
 			else if($data['user_group_id'] == 5) $code = 'C'. $max;
+			else if($data['user_group_id'] == 2) $code = 'U'. $max;
 			else $code = 'W'. $max;
 
 			$data['usercode'] = $code;

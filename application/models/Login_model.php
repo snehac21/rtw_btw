@@ -12,8 +12,10 @@ class Login_model extends CI_Model {
 		{
 			$first_row = $result->first_row();
 			$user =  (array) $first_row;
+			//echo '<pre>'; print_r($user); exit;
 			$user['user_group_id'] =get_all_user_groups($first_row->id);
 			$this->session->set_userdata($user);
+			//echo '<pre>'; print_r($_SESSION); exit;
 			$this->db->update('users',array('last_login'=>date('Y-m-d H:i:s')),array('id'=>$first_row->id));
 			return true;
 		}else

@@ -49,7 +49,7 @@ class Cases extends CI_Controller {
 		$data['designation_master'] = get_dropdown_value('designation_master','design_id','designation');
 		$data['pp_issue_state_master'] = get_dropdown_value('pp_issue_state_master','issue_id','issue');
 		$data['country_master'] = get_dropdown_value('country_master','country_id','country');
-		$data['user_type_arr'] = get_dropdown_value('user_groups','id','name','allowRegistration=1');
+		$data['user_type_arr'] = get_dropdown_value('user_groups','id','name','allowRegistration=1 AND id <> 2');
 		
 		$data['content'] = 'case_form';
 		$this->load->view('layout/content',$data);
@@ -212,8 +212,45 @@ class Cases extends CI_Controller {
 		if(isset($_POST['visa_id'])){
 			
 			$visa_info = $this->case_model->get_visa_value($_POST['visa_id']);
-			echo json_encode($visa_info);
-			//print_r($visa_type_master); exit;
+			//print_r($visa_info->other_services); exit;
+
+			echo json_encode($visa_info); 
+           			
+		}else echo 0;
+	}
+
+		/** To get Visa values **/
+	public function visaCoRelatedServices()
+	{
+		$data = array();
+		if(isset($_POST['visa_id'])){
+			
+			$visa_info = $this->case_model->get_visa_value($_POST['visa_id']);
+			//print_r($visa_info->other_services); exit;
+
+			$html  = '';
+
+			if(isset($visa_info->other_services) && strlen($visa_info->other_services) > 0){
+
+				$other_services = explode(',',$visa_info->other_services); $j = 1;
+				foreach($other_services as $os){
+					if($j > 3) $j = 1;
+
+					$os_val = get_dropdown_value('product_type_master','pt_id','pt_code','pt_id = "' . $os . '"');
+					foreach($os_val as $k => $v){
+
+						$small_case = str_replace(' ','_', $v);
+						$small_case = strtolower($small_case);
+						if($j == 1 ) $html .= "<tr>";
+						$html .= '<td><div class="checkbox checkbox-info checkbox-inline"><input checked = "checked" type="checkbox" value="'. $k .'" name="co_related_services['. $small_case .']"><label for="inlinecheckbox1"> '. strtoupper($v) .' </label></div></td>';
+						if($j == 3) $html .= "</tr>";
+					}
+					$j++;
+				}
+			}
+           
+			echo $html;
+			
 		}else echo 0;
 	}
 
@@ -223,9 +260,7 @@ class Cases extends CI_Controller {
 		$data = array();
 		if($this->input->post())
 		    {
-
 		    	//print_r($_POST); exit;
-		    	
 			$max = $this->case_model->maxCase();
 			$max = ($max == 0) ? '001' : ((strlen($max) == 1) ? ('00'.($max+1)) : ('0'.($max+1)));
 			

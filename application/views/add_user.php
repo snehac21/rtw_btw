@@ -12,7 +12,7 @@
                     <div class="row"><label class="col-sm-2 control-label">Select User Type</label>
                         <div class="col-sm-10">
                             <?php $user_type_arr = array(''=>'Select') + $user_type_arr;
-                            echo form_dropdown('user_type', $user_type_arr, '','class ="form-control m-b" ');
+                            echo form_dropdown('user_type', $user_type_arr, '','class ="form-control m-b"');
                             ?>
                             <?php echo form_error('user_type', '<p class="text-danger">', '</p>');?>
                         </div>

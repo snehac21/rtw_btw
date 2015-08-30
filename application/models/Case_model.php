@@ -120,7 +120,7 @@ class Case_model extends CI_Model {
 
         /* Insert into case logs table */
         //print_r($data); exit;
-        $this->db->insert('case_table',array('case_code'=>$data['case_code'],'front_user_id'=>1,'customer_id'=>$data['customer_id'],'customer_code'=>$data['cust_code'],'product_type_id'=>$data['product'],'created'=>$now_date,'updated'=>$now_date,'tr_status'=>2));
+        $this->db->insert('case_table',array('case_code'=>$data['case_code'],'front_user_id'=>$this->session->userdata('id'),'customer_id'=>$data['customer_id'],'customer_code'=>$data['cust_code'],'product_type_id'=>$data['product'],'created'=>$now_date,'updated'=>$now_date,'tr_status'=>2));
 
         $product = $data['product'];
 
@@ -201,5 +201,14 @@ class Case_model extends CI_Model {
     public function maxCase(){
         $data = $this->db->query('Select count(case_code) as case_count From case_table Where 1 Order by case_id desc Limit 0,1');
         return $data->num_rows();
+    }
+
+    /*To get all Cases */
+    public function getAllCases(){
+        $data = $this->db->query('Select case_table.*, user_group_id From case_table , users Where customer_id = id Order by case_id desc');
+        if($data->num_rows() > 0){
+            return $data->result_array();
+        }else
+        return 0;
     }
 }

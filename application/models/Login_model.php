@@ -15,8 +15,11 @@ class Login_model extends CI_Model {
 			//echo '<pre>'; print_r($user); exit;
 			$user['user_group_id'] =get_all_user_groups($first_row->id);
 			$this->session->set_userdata($user);
-			//echo '<pre>'; print_r($_SESSION); exit;
-			$this->db->update('users',array('last_login'=>date('Y-m-d H:i:s')),array('id'=>$first_row->id));
+			//echo '<pre>'; print_r($first_row->id); exit;
+
+			$now_date = strtotime("now");
+
+			$this->db->update('users',array('last_login'=>$now_date),array('id'=>$first_row->id));
 			return true;
 		}else
 			return false;
@@ -42,6 +45,7 @@ class Login_model extends CI_Model {
 		$this->db->update('users',array('password'=>md5($password)),array('uid'=>$this->session->userdata('uid')));
 		return true;
 	}
+
 }
 
 /* End of file welcome.php */

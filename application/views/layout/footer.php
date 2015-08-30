@@ -18,10 +18,12 @@
 
 <script>
 
+$('.datepicker').datepicker({ format: 'dd-mm-yyyy' });
+$('.datepicker2').datepicker({ format: 'dd-mm-yyyy' });
+
     $(function () {
 
-        $('.datepicker').datepicker({ format: 'dd-mm-yyyy' });
-        $('.datepicker2').datepicker({ format: 'dd-mm-yyyy' });
+        
     });
 
 </script>

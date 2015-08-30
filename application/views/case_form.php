@@ -213,6 +213,7 @@ for($i = 0; $i <= 100 ; $i++){
                                         </div>
                                         </div>
 
+                    <?php $issue_opt = array('' => 'Select PP Issue State' ) + $pp_issue_state_master; ?>
                     <div class="table-responsive">
                                 <table id="zone-to-geo-zone" class="table table-striped table-bordered table-hover">
                                     <thead>
@@ -226,7 +227,6 @@ for($i = 0; $i <= 100 ; $i++){
                                         <tr id="zone-to-geo-zone-row0 col-lg-">  
                                             <td class="text-left" >
                                                 <?php 
-                                                $issue_opt = array('' => 'Select PP Issue State' ) + $pp_issue_state_master;
                                             echo form_dropdown('passport[0][pp_state]', $issue_opt, '','class ="form-control pp_state", id = "pp_state0" ');
                                                 ?>
                                             </td>  
@@ -698,7 +698,7 @@ for($i = 0; $i <= 100 ; $i++){
                             <thead>
                             <tr>
                                 <th class ="text-info font-bold">Last Login</th>
-                                <td>25/07/2015</td>
+                                <td><?php echo date('d-m-Y H:i:s', $this->session->data['last_login']);?></td>
                             </tr>
                             </thead>
                             <tbody>
@@ -840,3 +840,25 @@ for($i = 0; $i <= 100 ; $i++){
                     </div>
                 </div>
 
+<script>
+/* To add Passport Row  */
+function addPassport() {
+    passport_row++;
+
+    html  = '<tr id="zone-to-geo-zone-row' + passport_row + '">';
+    html += '  <td class="text-left"><select name="passport[' + passport_row + '][pp_state]" id="pp_state' + passport_row + '" class="form-control pp_state">';
+    <?php foreach($issue_opt as $k => $v){ ?>
+      html += '<option value = "<?php echo $k; ?>"><?php echo $v; ?></option>';
+      <?php }?>
+    html += '</select></td>';
+    html += '  <td class="text-left" ><input id="pp_expiry' + passport_row + '" style = "width:38%" type="text" value="" name="passport['+ passport_row +'][pp_expiry]" class="datepicker form-control pp_expiry" placeholder="PP Expiry Date"></td>';
+    html += '  <td class="text-left" style = "width:10%"><button type="button" onclick="$(\'#zone-to-geo-zone-row' + passport_row + '\').remove();" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+    html += '</tr>';
+    
+    $('#zone-to-geo-zone tbody').append(html);
+
+    $('.datepicker').datepicker({ format: 'dd-mm-yyyy' });
+    $('.datepicker2').datepicker({ format: 'dd-mm-yyyy' });
+
+}
+</script>

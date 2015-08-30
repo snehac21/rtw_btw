@@ -16,11 +16,12 @@
                 </div>
             </div>
         </div>
-        <?php if(in_array(1, $this->session->userdata('user_group_id'))) : ?>
-            <ul class="nav" id="side-menu">
+        <?php if($this->session->userdata) : ?>
+        <ul class="nav" id="side-menu">
                 <li class="active">
-                    <a href="<?php echo base_url();?>index.php/admin/home"> <span class="nav-label">Dashboard</span></a>
+                    <a href="<?php echo base_url();?>/index.php/admin/home"> <span class="nav-label">Dashboard</span></a>
                 </li>
+        <?php if(in_array(1, $this->session->userdata('user_group_id'))) : ?>
                 <li>
                     <a href="#"><span class="nav-label">Users</span><span class="fa arrow"></span> </a>
                     <ul class="nav nav-second-level">
@@ -37,25 +38,19 @@
                         <li><a href="<?php echo base_url(); ?>index.php/masters/designation_management">Designation</a></li>
                     </ul>
                 </li>
-            </ul>
         <?php endif; ?>
 
-        <?php if(in_array(2, $this->session->userdata('user_group_id'))) : ?>
-            <ul class="nav" id="side-menu">
-                <li class="active">
-                    <a href="<?php echo base_url();?>index.php/admin/home"> <span class="nav-label">Dashboard</span></a>
-                </li>
+        <?php if(in_array(2, $this->session->userdata('user_group_id')) || in_array(1, $this->session->userdata('user_group_id'))) : ?>
                 <li>
-                    <a href="#"><span class="nav-label">Users</span><span class="fa arrow"></span> </a>
+                    <a href="#"><span class="nav-label">Cases</span><span class="fa arrow"></span> </a>
                     <ul class="nav nav-second-level">
-                        <li><a href="<?php echo base_url(); ?>index.php/cases/caseform">Add Inquiry</a></li>
-                        <li><a href="<?php echo base_url(); ?>index.php/cases/listing">Inquiry Listing</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/cases/caseform">Add Case</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/cases/listing">Case Listing</a></li>
                     </ul>
                 </li>
-                
-            </ul>
-        <?php endif; ?>
-
+            <?php endif; ?>     
+        </ul>
+         <?php endif; ?> 
     </div>
 </aside>
 

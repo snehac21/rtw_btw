@@ -161,8 +161,6 @@ class Cases extends CI_Controller {
 				}
 			$html['visa'] .= "</select>";
 
-
-
 			$html['oktb_required'] = $this->case_model->get_oktb_status($_POST['country_id']);
 
 			echo json_encode($html);
@@ -271,5 +269,26 @@ class Cases extends CI_Controller {
 
 			echo 1;
 		}else echo 0;
+	}
+
+	/** To list all the cases **/
+	public function listing()
+	{
+
+		$data['files_js'][] = 'vendor/datatables/media/js/jquery.dataTables.min.js';
+		$data['files_js'][] = 'vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js';
+		$data['js'][] = 'custom/datatable.js';
+		$data['files_css'][] = 'vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css';
+
+		$data['case_list'] = $this->case_model->getAllCases();
+		$data['product_type_master'] = get_dropdown_value('product_type_master','pt_id','product_type');
+		$data['user_info'] = get_dropdown_value('users','id','username');
+		$data['tr_status'] = get_dropdown_value('tr_status_master','tr_status_id','tr_status');
+		$data['user_groups'] = get_dropdown_value('user_groups','id','name');
+
+		//echo '<pre>'; print_r($data['case_list']); exit;
+
+		$data['content'] = 'case_listing';
+		$this->load->view('layout/content',$data);
 	}
 }

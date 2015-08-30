@@ -199,14 +199,3 @@ function visaCoRelatedServices(visa_id){
               });
 }
 
-function addPassport() {
-    passport_row++;
-
-    html  = '<tr id="zone-to-geo-zone-row' + passport_row + '">';
-    html += '  <td class="text-left"><select name="passport[' + passport_row + '][pp_state]" id="pp_state' + passport_row + '" class="form-control pp_state"><option value = "">Select PP Issue State</option></select></td>';
-    html += '  <td class="text-left"><input id="pp_expiry' + passport_row + '" type="text" value="" name="passport['+ passport_row +'][pp_expiry]" class="datepicker2 form-control pp_expiry" placeholder="PP Expiry Date"></td>';
-    html += '  <td class="text-left"><button type="button" onclick="$(\'#zone-to-geo-zone-row' + passport_row + '\').remove();" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-    html += '</tr>';
-    
-    $('#zone-to-geo-zone tbody').append(html);
-}

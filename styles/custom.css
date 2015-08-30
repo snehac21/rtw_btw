@@ -1,9 +1,0 @@
-input.error,textarea.error,select.error
-{
-	border:1px solid #ff0000 !important; 
-}
-
-label.error
-{
-	color:#ff0000 !important;
-}

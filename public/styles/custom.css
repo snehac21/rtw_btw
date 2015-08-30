@@ -19,7 +19,12 @@ label.error
 .modal-header{
     padding:10px!important;
 }
+<<<<<<< HEAD
 
 .datepicker2{
 	position: absolute;
+=======
+body {
+    font-size: 12px;
+>>>>>>> a6dc25446f16213ffccacff5b8e46eab75111094
 }

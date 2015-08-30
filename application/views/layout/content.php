@@ -1,5 +1,4 @@
 <?php 
-
 get_instance()->load->helper('global_helper');
 $this->load->view('layout/header');  
 /*load  js specific to particular view */
@@ -17,6 +16,24 @@ if(isset($css))
 	foreach($css as $single_css)
 	{
 		echo '<link rel="stylesheet" href="'.base_url().'public/styles/'.$single_css.'"/>';
+	}
+}
+
+/*load js specific to particular view */
+if(isset($files_js))
+{
+	foreach($files_js as $single_files)
+	{
+		echo '<script type="text/javascript" src="'.base_url().'public/'.$single_files.'"></script>';
+	}
+}
+
+/*load css specific to particular view */
+if(isset($files_css))
+{
+	foreach($files_css as $single_files)
+	{
+		echo '<link rel="stylesheet" href="'.base_url().'public/'.$single_files.'"/>';
 	}
 }
 

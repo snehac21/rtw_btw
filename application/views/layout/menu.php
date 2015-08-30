@@ -7,16 +7,16 @@
             </a>
 
             <div class="stats-label text-color">
-                <span class="font-extra-bold font-uppercase"><?php if(isset($this->session->userdata['first_name']) && isset($this->session->userdata['last_name'])) echo $this->session->userdata['first_name'].' '.$this->session->userdata['last_name']; ?></span>
+                <span class="font-extra-bold font-uppercase"><?php echo $this->session->userdata['first_name'].' '.$this->session->userdata['last_name']; ?></span>
 
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#">
-                        <small class="text-muted"><?php if(isset($this->session->userdata['user_group_id'])) echo get_group_name($this->session->userdata['user_group_id']); ?></small>
+                        <small class="text-muted"><?php foreach($this->session->userdata('user_group_id') as $user_g_id) { echo '<p>'.get_group_name($user_g_id).'</p>'; } ?></small>
                     </a>
                 </div>
             </div>
         </div>
-        <?php if(isset($this->session->userdata['user_group_id']) && $this->session->userdata['user_group_id'] == 1) : ?>
+        <?php if(in_array(1, $this->session->userdata('user_group_id'))) : ?>
             <ul class="nav" id="side-menu">
                 <li class="active">
                     <a href="<?php echo base_url();?>/index.php/admin/home"> <span class="nav-label">Dashboard</span></a>
@@ -24,12 +24,38 @@
                 <li>
                     <a href="#"><span class="nav-label">Users</span><span class="fa arrow"></span> </a>
                     <ul class="nav nav-second-level">
-                        <li><a href="<?php echo base_url(); ?>/index.php/admin/users_listing">Users Listing</a></li>
+                        <li><a href="<?php echo base_url(); ?>/index.php/admin/users_listing">Manage Users</a></li>
                         <li><a href="<?php echo base_url(); ?>/index.php/admin/add_new_user">Add New User</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><span class="nav-label">Masters</span><span class="fa arrow"></span> </a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="<?php echo base_url(); ?>/index.php/masters/country_management">Country</a></li>
+                        <li><a href="<?php echo base_url(); ?>/index.php/masters/state_management">State</a></li>
+                        <li><a href="<?php echo base_url(); ?>/index.php/masters/city_management">City</a></li>
+                        <li><a href="<?php echo base_url(); ?>/index.php/masters/designation_management">Designation</a></li>
                     </ul>
                 </li>
             </ul>
         <?php endif; ?>
+
+        <?php if(in_array(2, $this->session->userdata('user_group_id'))) : ?>
+            <ul class="nav" id="side-menu">
+                <li class="active">
+                    <a href="<?php echo base_url();?>/index.php/admin/home"> <span class="nav-label">Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="nav-label">Users</span><span class="fa arrow"></span> </a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="<?php echo base_url(); ?>/index.php/cases/caseform">Add Inquiry</a></li>
+                        <li><a href="<?php echo base_url(); ?>/index.php/cases/listing">Inquiry Listing</a></li>
+                    </ul>
+                </li>
+                
+            </ul>
+        <?php endif; ?>
+
     </div>
 </aside>
 

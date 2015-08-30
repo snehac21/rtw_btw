@@ -12,6 +12,42 @@ if(!function_exists('get_group_name')){
 	}
 }
 
+/*get all group od single user by user id*/
+
+if(!function_exists('get_all_user_groups')){
+	function get_all_user_groups($user_id)
+	{
+		$user_groups =array();
+		$ci =& get_instance();
+		$result = $ci->db->get_where('user_groups_mapping',array('user_id'=>$user_id,'status'=>'1'))->result_array();
+		foreach($result as $r)
+		{
+			$user_groups[] = $r['user_group_id'];
+		}
+		return $user_groups;
+	}
+}
+
+/*get all group name of single user by user id*/
+
+if(!function_exists('get_all_user_groups_name')){
+	function get_all_user_groups_name($user_id)
+	{
+		$user_groups_name =array();
+		$ci =& get_instance();
+		$user_groups = get_all_user_groups($user_id);
+		$ci->db->select('name');
+		$ci->db->from('user_groups');
+		$ci->db->where_in('id',$user_groups);
+		$result = $ci->db->get()->result_array();
+		foreach($result as $r)
+		{
+			$user_groups_name[] = $r['name'];
+		}
+		return $user_groups_name;
+	}
+}
+
 /* To get dropdown values */
 
 if(!function_exists('get_dropdown_value')){
@@ -31,5 +67,4 @@ if(!function_exists('get_dropdown_value')){
         return $value;
 	}
 }
-
 ?>

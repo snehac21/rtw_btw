@@ -49,7 +49,7 @@ class Cases extends CI_Controller {
 		$data['designation_master'] = get_dropdown_value('designation_master','design_id','designation');
 		$data['pp_issue_state_master'] = get_dropdown_value('pp_issue_state_master','issue_id','issue');
 		$data['country_master'] = get_dropdown_value('country_master','country_id','country');
-		$data['user_type_arr'] = get_dropdown_value('user_groups','id','name','allowRegistration=1');
+		$data['user_type_arr'] = get_dropdown_value('user_groups','id','name','allowRegistration=1 AND id <> 2');
 		
 		$data['content'] = 'case_form';
 		$this->load->view('layout/content',$data);

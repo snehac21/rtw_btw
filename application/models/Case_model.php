@@ -18,10 +18,8 @@ class Case_model extends CI_Model {
 
     public function getCustomers($value){
 
-    	//$data = $this->db->query('Select GROUP_CONCAT("\'",username,"\'") as name From users Where status = 1 AND active = 1 AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
-        //CONCAT(username,"\/",usercode,"\/",email,"\/",contact_no)
-
-        $data = $this->db->query('Select CONCAT(username,", ",usercode,", ",email,", ",contact_no) as name, id From users Where status = "1" AND active = "Yes" AND approve = 1 AND id <> 1 AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
+    
+        $data = $this->db->query('Select CONCAT(username,", ",usercode,", ",email,", ",contact_no) as name, id From users Where status = "1" AND active = "Yes" AND approve = 1 AND user_group_id NOT IN (1,2) AND (username LIKE "%'.$value.'%" OR email LIKE "%'.$value.'%" OR usercode LIKE "%'.$value.'%" OR contact_no LIKE "%'.$value.'%" ) ');
 
     	if($data->num_rows() > 0){
             
@@ -68,11 +66,16 @@ class Case_model extends CI_Model {
 
     public function saveUser($data){
         $now_date = strtotime("now");
-        $this->db->insert('users',array('usercode'=>$data['code'],'user_group_id'=>$data['user_type'],'username'=>$data['user_name'],'password'=>md5($data['new_password']),'email'=>$data['user_email'],'contact_no'=>$data['user_contact'],'last_login'=>date('Y-m-d H:i:s'),'created'=>$now_date,'modified'=>$now_date, 'active'=>'Yes','approve'=>1));
+        $this->db->insert('users',array('usercode'=>$data['code'],'user_group_id'=>$data['user_type'],'username'=>$data['user_name'],'password'=>md5($data['new_password']),'email'=>$data['user_email'],'contact_no'=>$data['user_contact'],'last_login'=>date('Y-m-d H:i:s'),'created'=>$now_date,'updated'=>$now_date, 'active'=>'Yes','approve'=>1));
 
         /** To get last insert ID **/
         $user_id = $this->db->insert_id();
         $user_meta_fields = array('user_type'=>'agent_type','bus_name'=>'bus_name','user_contact'=>'contact_no','user_area'=>'area','user_city'=>'city','user_state'=>'state','user_country'=>'country','alt_contact'=>'alt_contact_no');
+
+        if(in_array($data['user_type'],get_all_user_groups($user_id)))
+            $this->db->update('user_groups_mapping',array('updated'=>$now_date));
+        else
+            $this->db->insert('user_groups_mapping',array('user_id'=>$user_id,'user_group_id'=>$data['user_type'],'created'=>$now_date,'updated'=>$now_date));
 
         foreach($user_meta_fields as $k=>$v){
             $this->db->insert('user_meta',array('user_id'=>$user_id,'meta_key'=>$v,'meta_value'=>$data[$k]));

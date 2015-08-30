@@ -36,8 +36,9 @@ if(isset($files_css))
 		echo '<link rel="stylesheet" href="'.base_url().'public/'.$single_files.'"/>';
 	}
 }
-
+if($this->session->userdata('user_group_id'))
 $this->load->view('layout/menu');
+
 if(isset($content)) 
 $this->load->view($content);
 $this->load->view('layout/footer');

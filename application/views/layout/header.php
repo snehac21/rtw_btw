@@ -53,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="navbar-right">
             <ul class="nav navbar-nav no-borders">
                 <li class="dropdown">
-                    <a href="<?php echo base_url();?>/index.php/login/logout">
+                    <a href="<?php echo base_url();?>index.php/login/logout">
                         <i class="pe-7s-upload pe-rotate-90"></i>
                     </a>
                 </li>

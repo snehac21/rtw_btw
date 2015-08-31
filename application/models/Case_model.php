@@ -200,7 +200,7 @@ class Case_model extends CI_Model {
     /* Get max case value */
     public function maxCase(){
         $data = $this->db->query('Select count(case_code) as case_count From case_table Where 1 Order by case_id desc Limit 0,1');
-        return $data->num_rows();
+        return $data->first_row()->case_count;
     }
 
     /*To get all Cases */
